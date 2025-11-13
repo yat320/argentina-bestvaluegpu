@@ -23,7 +23,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 API_URL = "https://api.mercadolibre.com/sites/MLA/search"
 DEFAULT_SLEEP_SECONDS = 0.35  # avoid hammering the public endpoint
@@ -43,17 +43,42 @@ def save_gpu_data(path: Path, data: Iterable[Dict[str, Any]]) -> None:
 
 
 def fetch_min_price(query: str, max_results: int) -> Optional[float]:
-    params = {"q": query, "limit": max_results}
-    url = f"{API_URL}?{urlencode(params)}"
+    """
+    Devuelve el precio mínimo en ARS para la búsqueda dada.
+    Usa la API pública de MercadoLibre (sites/MLA/search) e intenta
+    hacerse pasar por un navegador normal vía User-Agent.
+    """
+    params = {
+        "q": query,
+        "limit": max_results,
+    }
+    query_string = urlencode(params)
+    url = f"{API_URL}?{query_string}"
+
+    # Headers para que no parezca un bot “crudo”
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        ),
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "es-AR,es;q=0.9,en;q=0.8",
+    }
+
     try:
-        with urlopen(url, timeout=10) as response:
+        req = Request(url, headers=headers)
+        with urlopen(req, timeout=10) as response:
             payload = json.loads(response.read().decode("utf-8"))
     except (HTTPError, URLError) as exc:
         print(f"[ERROR] Failed to fetch '{query}': {exc}", file=sys.stderr)
         return None
 
     results = payload.get("results", [])
-    prices = [item.get("price") for item in results if item.get("currency_id") == "ARS"]
+    prices = [
+        item.get("price")
+        for item in results
+        if item.get("currency_id") == "ARS"
+    ]
     prices = [price for price in prices if isinstance(price, (int, float))]
     if not prices:
         print(f"[WARN] No ARS prices found for '{query}'", file=sys.stderr)
