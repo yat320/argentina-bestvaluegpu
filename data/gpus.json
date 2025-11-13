@@ -1,0 +1,26 @@
+[
+  {
+    "name": "NVIDIA RTX 3060 12GB",
+    "algo": "ethash",
+    "hashrate": 48,
+    "power": 130,
+    "priceArs": 450000,
+    "dailyProfitUsd": 0.6
+  },
+  {
+    "name": "NVIDIA RTX 3070 8GB",
+    "algo": "ethash",
+    "hashrate": 62,
+    "power": 140,
+    "priceArs": 620000,
+    "dailyProfitUsd": 0.8
+  },
+  {
+    "name": "AMD RX 580 8GB",
+    "algo": "ethash",
+    "hashrate": 30,
+    "power": 140,
+    "priceArs": 200000,
+    "dailyProfitUsd": 0.3
+  }
+]

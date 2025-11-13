@@ -1,34 +1,10 @@
 /**
- * Datos dummy de ejemplo.
- * Después podés reemplazar esto con datos reales
- * (manual, JSON, API, scraper, etc.).
+ * Fuente de datos inicial.
+ * Ahora se obtiene desde data/gpus.json para emular
+ * el flujo que luego manejará un backend/API real.
  */
-const gpus = [
-  {
-    name: "NVIDIA RTX 3060 12GB",
-    algo: "ethash",
-    hashrate: 48, // MH/s
-    power: 130, // W
-    priceArs: 450000,
-    dailyProfitUsd: 0.6,
-  },
-  {
-    name: "NVIDIA RTX 3070 8GB",
-    algo: "ethash",
-    hashrate: 62,
-    power: 140,
-    priceArs: 620000,
-    dailyProfitUsd: 0.8,
-  },
-  {
-    name: "AMD RX 580 8GB",
-    algo: "ethash",
-    hashrate: 30,
-    power: 140,
-    priceArs: 200000,
-    dailyProfitUsd: 0.3,
-  },
-];
+let gpus = [];
+let lastDataSource = "";
 
 const USD_ARS = 1000; // TODO: traer de API o actualizar manual
 const ENERGY_ARS_PER_KWH = 80; // TODO: ajustar al costo real AR
@@ -77,6 +53,15 @@ function formatNumber(n, digits = 2) {
 function buildTable(filtered) {
   const container = document.getElementById("tableContainer");
   if (!container) return;
+
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        No hay GPUs cargadas aún.
+      </div>
+    `;
+    return;
+  }
 
   const rows = filtered
     .map((gpu, index) => {
@@ -174,6 +159,71 @@ function applyFilters() {
   buildTable(result);
 }
 
+function resolveApiCandidates() {
+  const params = new URLSearchParams(window.location.search);
+  const explicit = params.get("api") || window.BESTVALUEGPU_API_BASE;
+  const candidates = [];
+
+  if (explicit) {
+    const normalized = explicit.replace(/\/$/, "");
+    candidates.push(`${normalized}/gpus`);
+  }
+
+  candidates.push("/api/gpus");
+  candidates.push("data/gpus.json");
+
+  return [...new Set(candidates)];
+}
+
+async function fetchGpusFromSources() {
+  const errors = [];
+  for (const endpoint of resolveApiCandidates()) {
+    try {
+      const response = await fetch(endpoint, { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      if (!Array.isArray(data)) {
+        throw new Error("Formato de datos inválido");
+      }
+      lastDataSource = endpoint;
+      return data;
+    } catch (error) {
+      errors.push(`${endpoint}: ${error.message}`);
+    }
+  }
+
+  throw new Error(errors.join("\n"));
+}
+
+async function loadGpus() {
+  const container = document.getElementById("tableContainer");
+  if (container) {
+    container.innerHTML = `
+      <div class="empty-state">
+        Cargando datos de GPUs...
+      </div>
+    `;
+  }
+
+  try {
+    gpus = await fetchGpusFromSources();
+    applyFilters();
+  } catch (error) {
+    console.error(error);
+    if (container) {
+      container.innerHTML = `
+        <div class="empty-state">
+          Error al cargar los datos.
+          <br />
+          <small>${error.message.replace(/\n/g, "<br />")}</small>
+        </div>
+      `;
+    }
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   ["searchInput", "algoSelect", "sortSelect"].forEach((id) => {
     const el = document.getElementById(id);
@@ -181,5 +231,5 @@ document.addEventListener("DOMContentLoaded", () => {
     if (el && el.tagName === "SELECT") el.addEventListener("change", applyFilters);
   });
 
-  applyFilters();
+  loadGpus();
 });
