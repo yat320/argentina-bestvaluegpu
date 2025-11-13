@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Argentina BestValueGPU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="Ranking de mejores GPUs para minería en Argentina por precio, consumo y rentabilidad."
+  >
+  <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <span class="logo-main">Argentina BestValueGPU</span>
+      <span class="logo-sub">Mejores placas de video para minería (AR)</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="filters">
+      <h2>Filtros</h2>
+      <div class="filter-row">
+        <label>
+          Buscar GPU:
+          <input type="text" id="searchInput" placeholder="RTX 3060, RX 580..." />
+        </label>
+        <label>
+          Algoritmo:
+          <select id="algoSelect">
+            <option value="">Todos</option>
+            <option value="ethash">Ethash / ETC</option>
+            <option value="kawpow">KawPow (RVN)</option>
+            <option value="autolykos">Autolykos (ERGO)</option>
+          </select>
+        </label>
+        <label>
+          Ordenar por:
+          <select id="sortSelect">
+            <option value="bestValue">Mejor valor (default)</option>
+            <option value="hashrate">Hashrate</option>
+            <option value="efficiency">Eficiencia (MH/s por W)</option>
+            <option value="price">Precio ARS</option>
+            <option value="roi">ROI (días)</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="table-section">
+      <h2>Ranking de GPUs</h2>
+      <div id="tableContainer" class="table-wrapper">
+        <!-- La tabla se genera desde JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Proyecto Argentina BestValueGPU · Datos de referencia, no asesoría financiera.</span>
+  </footer>
+
+  <script src="src/app.js"></script>
+</body>
+</html>

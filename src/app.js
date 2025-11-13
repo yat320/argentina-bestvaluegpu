@@ -1,0 +1,185 @@
+/**
+ * Datos dummy de ejemplo.
+ * Después podés reemplazar esto con datos reales
+ * (manual, JSON, API, scraper, etc.).
+ */
+const gpus = [
+  {
+    name: "NVIDIA RTX 3060 12GB",
+    algo: "ethash",
+    hashrate: 48, // MH/s
+    power: 130, // W
+    priceArs: 450000,
+    dailyProfitUsd: 0.6,
+  },
+  {
+    name: "NVIDIA RTX 3070 8GB",
+    algo: "ethash",
+    hashrate: 62,
+    power: 140,
+    priceArs: 620000,
+    dailyProfitUsd: 0.8,
+  },
+  {
+    name: "AMD RX 580 8GB",
+    algo: "ethash",
+    hashrate: 30,
+    power: 140,
+    priceArs: 200000,
+    dailyProfitUsd: 0.3,
+  },
+];
+
+const USD_ARS = 1000; // TODO: traer de API o actualizar manual
+const ENERGY_ARS_PER_KWH = 80; // TODO: ajustar al costo real AR
+
+function gpuMetrics(gpu) {
+  const efficiency = gpu.hashrate / gpu.power; // MH/s por W
+  const dailyRevenueArs = gpu.dailyProfitUsd * USD_ARS;
+
+  // Consumo diario kWh = (W / 1000) * 24
+  const dailyEnergyKwh = (gpu.power / 1000) * 24;
+  const dailyEnergyCostArs = dailyEnergyKwh * ENERGY_ARS_PER_KWH;
+  const dailyNetArs = dailyRevenueArs - dailyEnergyCostArs;
+
+  // ROI en días (si dailyNetArs <= 0 -> infinito)
+  const roiDays = dailyNetArs > 0 ? gpu.priceArs / dailyNetArs : Infinity;
+
+  // "Best value score" simple: neto diario * eficiencia
+  const score = dailyNetArs * efficiency;
+
+  return {
+    efficiency,
+    dailyRevenueArs,
+    dailyEnergyCostArs,
+    dailyNetArs,
+    roiDays,
+    score,
+  };
+}
+
+function formatCurrency(ars) {
+  return ars.toLocaleString("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    maximumFractionDigits: 0,
+  });
+}
+
+function formatNumber(n, digits = 2) {
+  if (!isFinite(n)) return "—";
+  return n.toLocaleString("es-AR", {
+    maximumFractionDigits: digits,
+    minimumFractionDigits: digits,
+  });
+}
+
+function buildTable(filtered) {
+  const container = document.getElementById("tableContainer");
+  if (!container) return;
+
+  const rows = filtered
+    .map((gpu, index) => {
+      const m = gpuMetrics(gpu);
+      const isBest = index === 0;
+      const highPower = gpu.power > 200;
+
+      return `
+        <tr>
+          <td>${index + 1}</td>
+          <td>
+            <div>${gpu.name}</div>
+            <div style="font-size:0.75rem;color:#9ca3af;">
+              ${gpu.algo.toUpperCase()}
+            </div>
+          </td>
+          <td>${gpu.hashrate} MH/s</td>
+          <td>${gpu.power} W ${
+            highPower
+              ? '<span class="badge badge-warn">Alto consumo</span>'
+              : ""
+          }</td>
+          <td>${formatCurrency(gpu.priceArs)}</td>
+          <td>${formatNumber(m.efficiency, 2)}</td>
+          <td>${formatCurrency(m.dailyNetArs)}</td>
+          <td>${
+            isBest
+              ? `<span class="badge badge-best">Mejor valor</span>`
+              : formatNumber(m.roiDays, 0) + " días"
+          }</td>
+        </tr>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>GPU</th>
+          <th>Hashrate</th>
+          <th>Power</th>
+          <th>Precio ARS</th>
+          <th>MH/s · W⁻¹</th>
+          <th>Neto diario (ARS)</th>
+          <th>ROI estimado</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+  `;
+}
+
+function applyFilters() {
+  const search = document.getElementById("searchInput")?.value
+    .toLowerCase()
+    .trim();
+  const algo = document.getElementById("algoSelect")?.value;
+  const sort = document.getElementById("sortSelect")?.value;
+
+  let result = [...gpus];
+
+  if (search) {
+    result = result.filter((gpu) =>
+      gpu.name.toLowerCase().includes(search)
+    );
+  }
+
+  if (algo) {
+    result = result.filter((gpu) => gpu.algo === algo);
+  }
+
+  result.sort((a, b) => {
+    const ma = gpuMetrics(a);
+    const mb = gpuMetrics(b);
+
+    switch (sort) {
+      case "hashrate":
+        return mb.hashrate - ma.hashrate;
+      case "efficiency":
+        return mb.efficiency - ma.efficiency;
+      case "price":
+        return ma.priceArs - mb.priceArs;
+      case "roi":
+        return ma.roiDays - mb.roiDays;
+      case "bestValue":
+      default:
+        return mb.score - ma.score;
+    }
+  });
+
+  buildTable(result);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  ["searchInput", "algoSelect", "sortSelect"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", applyFilters);
+    if (el && el.tagName === "SELECT") el.addEventListener("change", applyFilters);
+  });
+
+  applyFilters();
+});
