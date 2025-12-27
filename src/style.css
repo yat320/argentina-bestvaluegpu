@@ -151,6 +151,14 @@ th {
   color: var(--muted);
 }
 
+th[data-key] {
+  cursor: pointer;
+}
+
+th[data-key]:hover {
+  color: var(--text);
+}
+
 tbody tr:nth-child(even) {
   background: rgba(15, 23, 42, 0.85);
 }

@@ -8,19 +8,27 @@
     "dailyProfitUsd": 0.6
   },
   {
-    "name": "NVIDIA RTX 3070 8GB",
-    "algo": "ethash",
-    "hashrate": 62,
-    "power": 140,
-    "priceArs": 620000,
-    "dailyProfitUsd": 0.8
-  },
-  {
     "name": "AMD RX 580 8GB",
     "algo": "ethash",
     "hashrate": 30,
     "power": 140,
     "priceArs": 200000,
     "dailyProfitUsd": 0.3
+  },
+  {
+    "name": "NVIDIA RTX 3080 10GB",
+    "algo": "ethash",
+    "hashrate": 95,
+    "power": 220,
+    "priceArs": 800000,
+    "dailyProfitUsd": 1.2
+  },
+  {
+    "name": "NVIDIA GTX 1660 Super 6GB",
+    "algo": "ethash",
+    "hashrate": 26,
+    "power": 85,
+    "priceArs": 150000,
+    "dailyProfitUsd": 0.2
   }
 ]
