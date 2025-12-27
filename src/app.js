@@ -29,8 +29,33 @@ function displayTable(dataArray) {
   dataArray.forEach((gpu) => {
     const row = document.createElement("tr");
 
+    const nameCell = document.createElement("td");
+    if (gpu.url) {
+      const link = document.createElement("a");
+      link.href = gpu.url;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = gpu.name;
+      nameCell.appendChild(link);
+    } else {
+      nameCell.textContent = gpu.name;
+    }
+    row.appendChild(nameCell);
+
+    const sourceDateCell = document.createElement("td");
+    if (gpu.source) {
+      const sourceLine = document.createElement("div");
+      sourceLine.textContent = gpu.source;
+      sourceDateCell.appendChild(sourceLine);
+    }
+    if (gpu.priceDate) {
+      const dateLine = document.createElement("div");
+      dateLine.textContent = gpu.priceDate;
+      sourceDateCell.appendChild(dateLine);
+    }
+    row.appendChild(sourceDateCell);
+
     const cells = [
-      gpu.name,
       gpu.algo,
       gpu.hashrate,
       gpu.power,
