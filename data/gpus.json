@@ -5,7 +5,10 @@
     "hashrate": 48,
     "power": 130,
     "priceArs": 450000,
-    "dailyProfitUsd": 0.6
+    "dailyProfitUsd": 0.6,
+    "url": "https://listado.mercadolibre.com.ar/rtx-3060-12gb",
+    "source": "MercadoLibre",
+    "priceDate": "2025-12-27"
   },
   {
     "name": "AMD RX 580 8GB",
@@ -13,7 +16,11 @@
     "hashrate": 30,
     "power": 140,
     "priceArs": 200000,
-    "dailyProfitUsd": 0.3
+    "dailyProfitUsd": 0.3,
+    "url": "https://listado.mercadolibre.com.ar/rx-580-8gb",
+    "source": "MercadoLibre",
+    "priceDate": "2025-12-27",
+    "notes": "Usada en algunos listados"
   },
   {
     "name": "NVIDIA RTX 3080 10GB",
@@ -21,7 +28,10 @@
     "hashrate": 95,
     "power": 220,
     "priceArs": 800000,
-    "dailyProfitUsd": 1.2
+    "dailyProfitUsd": 1.2,
+    "url": "https://listado.mercadolibre.com.ar/rtx-3080-10gb",
+    "source": "MercadoLibre",
+    "priceDate": "2025-12-27"
   },
   {
     "name": "NVIDIA GTX 1660 Super 6GB",
@@ -29,6 +39,9 @@
     "hashrate": 26,
     "power": 85,
     "priceArs": 150000,
-    "dailyProfitUsd": 0.2
+    "dailyProfitUsd": 0.2,
+    "url": "https://listado.mercadolibre.com.ar/gtx-1660-super-6gb",
+    "source": "MercadoLibre",
+    "priceDate": "2025-12-27"
   }
 ]
