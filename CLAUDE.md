@@ -6,6 +6,13 @@ Página estática que ordena placas de video por puntos de 3DMark por peso, con 
 - Value: puntos por cada $100.000 en escala de 0 a 100, donde 100 es la mejor placa de esa condición (nuevas y usadas por separado). La búsqueda y el filtro de marca no lo cambian. Se muestran las dos columnas a propósito: pts/$100k sirve para comparar en el tiempo y Value de un vistazo.
 - Precio: la mediana de las publicaciones del modelo exacto, nunca el mínimo de una búsqueda.
 
+## De dónde salen los precios
+
+- **Nuevas: HardGamers.** `scripts/hardgamers.py --categoria` recorre la categoría de placas de video (5 s entre páginas, el Crawl-delay de su robots.txt) y lee los microdatos de schema.org de cada producto. Responde desde la nube, así que corre todos los días en GitHub Actions (`.github/workflows/precios.yml`).
+- **Usadas: sin fuente todavía.** La única es Mercado Libre, con los problemas de abajo.
+- El matching está en `placa_de()`: línea, número y variante tienen que coincidir; si el título dice la memoria ("8GB", "8 GB" u "8G") tiene que coincidir con `vram`; si no la dice y hay dos placas posibles (RTX 5060 Ti de 8 y 16 GB), se descarta. Las placas que el mercado ofrece y no están en `gpus.json` aparecen como `[sin placa]` en la salida de error: revisar esa lista de vez en cuando para sumar modelos.
+- En octubre de 2026, nuevas casi solo había RTX 50 y RX 9000; de RTX 40 y RX 6000 no había ninguna.
+
 ## Lo que ya sabemos de Mercado Libre (no volver a equivocarse acá)
 
 1. **La API de búsqueda no es pública.** Desde abril de 2025, `GET https://api.mercadolibre.com/sites/MLA/search` pide un token OAuth. Sin token devuelve 403.

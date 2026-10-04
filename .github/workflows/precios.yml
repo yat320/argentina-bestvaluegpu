@@ -1,0 +1,47 @@
+name: Precios
+
+# Una vez por día baja los precios de placas nuevas de HardGamers y
+# actualiza data/precios.json. También se puede correr a mano.
+on:
+  schedule:
+    - cron: "17 9 * * *"  # 6:17 en Argentina
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency: precios
+
+jobs:
+  precios:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Bajar precios de HardGamers
+        run: python scripts/hardgamers.py --categoria > data/precios.csv
+      - name: Revisar que haya suficientes
+        run: |
+          n=$(($(wc -l < data/precios.csv) - 1))
+          echo "$n publicaciones"
+          if [ "$n" -lt 200 ]; then
+            echo "::error::Solo $n publicaciones; puede que HardGamers haya cambiado. No se actualiza."
+            exit 1
+          fi
+      - name: Armar precios.json
+        run: python scripts/precios_desde_csv.py data/precios.csv --fuente hardgamers
+      - name: Subir si cambió
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add data/precios.json
+          if git diff --cached --quiet; then echo "Sin cambios"; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -m "Precios de HardGamers del $(date +%d/%m/%Y)"
+          git push
+          # Un push con el token de Actions no siempre dispara la publicación de Pages.
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || true

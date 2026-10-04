@@ -24,6 +24,7 @@ header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-be
 h1{font-family:var(--display);font-stretch:80%;font-weight:800;font-size:1.7rem;letter-spacing:-.01em;margin:0;text-wrap:balance}
 h1 span{color:var(--accent)}
 .sub{color:var(--muted);margin:0;font-size:.92rem}
+.sub a{color:inherit}
 .aviso{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:10px 12px;font-size:.9rem}
 .aviso b{font-weight:700}
 .filtros{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -63,7 +64,7 @@ td.num{font-family:var(--mono);font-size:.88rem}
     <p class="sub" id="fecha">Placas de video: puntos de 3DMark por cada peso</p>
   </header>
 
-  <div class="aviso" id="aviso" hidden><b>Precios de ejemplo.</b> Son inventados para armar la página; todavía no salen de Mercado Libre. El rendimiento (3DMark) es aproximado.</div>
+  <div class="aviso" id="aviso" hidden></div>
 
   <div class="filtros">
     <input id="buscar" type="search" placeholder="Buscar placa: 4060, RX 7600…" aria-label="Buscar placa">
@@ -95,7 +96,7 @@ td.num{font-family:var(--mono);font-size:.88rem}
   </div>
 
   <div class="notas">
-    <p><b>Precio:</b> la mediana de las publicaciones de Mercado Libre que coinciden con el modelo exacto, sin accesorios, notebooks ni precios falsos. Nuevas y usadas van por separado. El precio abre la búsqueda en Mercado Libre; "la más barata" lleva a la publicación más barata que pasó los filtros.</p>
+    <p><b>Precio:</b> la mediana de las publicaciones que coinciden con el modelo exacto (misma variante y memoria), sin notebooks, PCs armadas ni accesorios, y sin las que están a menos de la mitad o más del doble de la mediana. Nuevas y usadas van por separado. El precio abre la búsqueda; "la más barata" lleva a la publicación más barata que pasó los filtros.</p>
     <p><b>Value:</b> los puntos de 3DMark por cada $100.000 en una escala de 0 a 100, donde 100 es la placa nueva (o usada) que más rinde por peso. No cambia con la búsqueda ni con el filtro de marca.</p>
   </div>
 </div>
@@ -103,9 +104,10 @@ td.num{font-family:var(--mono);font-size:.88rem}
 <script>
 const $=s=>document.querySelector(s);
 const fmt=n=>'$'+Math.round(n).toLocaleString('es-AR');
-let gpus=[],precios={},cond='nueva',marca='',orden={k:'value',dir:-1};
+let gpus=[],precios={},busquedas={},cond='nueva',marca='',orden={k:'value',dir:-1};
 
-// Filtro de condición del listado de ML.
+// Búsqueda por defecto: el listado de ML con el filtro de condición.
+// precios.json puede traer su propia búsqueda por condición en "busquedas".
 const COND={nueva:'_ITEM*CONDITION_2230284_NoIndex_True',usada:'_ITEM*CONDITION_2230581_NoIndex_True'};
 function slug(s){return s.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
 
@@ -129,15 +131,22 @@ function pintar(){
     if(th.dataset.k===orden.k)th.setAttribute('aria-sort',orden.dir<0?'descending':'ascending');
     else th.removeAttribute('aria-sort');
   });
-  if(!rs.length){$('#filas').innerHTML=`<tr><td colspan="7" class="vacio">No hay placas ${cond==='nueva'?'nuevas':'usadas'} con ese filtro.</td></tr>`;return}
+  if(!rs.length){
+    const hay=Object.values(precios).some(p=>p[cond]);
+    $('#filas').innerHTML=`<tr><td colspan="7" class="vacio">${hay
+      ?`No hay placas ${cond==='nueva'?'nuevas':'usadas'} con ese filtro.`
+      :`Todavía no hay precios de placas ${cond==='nueva'?'nuevas':'usadas'}.`}</td></tr>`;
+    return}
   $('#filas').innerHTML=rs.map(r=>{
-    const url='https://listado.mercadolibre.com.ar/'+slug(r.busqueda)+COND[cond];
+    const url=busquedas[cond]
+      ?busquedas[cond].replace('{q}',encodeURIComponent(r.busqueda))
+      :'https://listado.mercadolibre.com.ar/'+slug(r.busqueda)+COND[cond];
     const extra=r.barata&&r.barata.url
       ?`<span class="n">la más barata: <a href="${r.barata.url}" target="_blank" rel="noopener">${fmt(r.barata.precio)}</a></span>`:'';
     return `<tr>
       <td><span class="nom">${r.nombre}</span><span class="marca">${r.marca}</span></td>
       <td><div class="value"><span class="b"><i style="width:${r.value}%"></i></span><b>${r.value}</b></div></td>
-      <td class="num precio"><a href="${url}" target="_blank" rel="noopener">${fmt(r.precio)}</a><span class="n">${r.pubs} publicaciones</span>${extra}</td>
+      <td class="num precio"><a href="${url}" target="_blank" rel="noopener">${fmt(r.precio)}</a><span class="n">${r.pubs} ${r.pubs===1?'publicación':'publicaciones'}</span>${extra}</td>
       <td class="num">${Math.round(r.ppk).toLocaleString('es-AR')}</td>
       <td class="num">${r.tdmark.toLocaleString('es-AR')}</td>
       <td class="num">${r.vram} GB</td>
@@ -162,9 +171,16 @@ document.querySelectorAll('th').forEach(th=>{
 
 Promise.all([fetch('data/gpus.json').then(r=>r.json()),fetch('data/precios.json').then(r=>r.json())])
   .then(([g,p])=>{
-    gpus=g;precios=p.precios||{};
-    $('#aviso').hidden=!p.ejemplo;
-    if(p.actualizado)$('#fecha').textContent=`Placas de video: puntos de 3DMark por cada peso · precios del ${p.actualizado.split('-').reverse().join('/')}`;
+    gpus=g;precios=p.precios||{};busquedas=p.busquedas||{};
+    const aprox=g.some(x=>x.tdmarkAprox);
+    const avisos=[];
+    if(p.ejemplo)avisos.push('<b>Precios de ejemplo.</b> Son inventados para armar la página.');
+    if(aprox)avisos.push('<b>3DMark aproximado.</b> Los puntajes todavía no están verificados contra una fuente.');
+    $('#aviso').innerHTML=avisos.join(' ');
+    $('#aviso').hidden=!avisos.length;
+    const fecha=p.actualizado?` del ${p.actualizado.split('-').reverse().join('/')}`:'';
+    const fuente=p.fuenteUrl?` de <a href="${p.fuenteUrl}" target="_blank" rel="noopener">${p.fuenteNombre}</a>`:'';
+    $('#fecha').innerHTML=`Placas de video: puntos de 3DMark por cada peso · precios${fuente}${fecha}`;
     pintar();
   })
   .catch(()=>{$('#filas').innerHTML='<tr><td colspan="7" class="vacio">No se pudieron cargar los datos (data/gpus.json y data/precios.json).</td></tr>'});
