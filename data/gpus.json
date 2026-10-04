@@ -6,7 +6,18 @@
     "watt": 75,
     "vram": 4,
     "tdmark": 3500,
-    "busqueda": "GTX 1650"
+    "busqueda": "GTX 1650",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-3050-6gb",
+    "nombre": "GeForce RTX 3050 6GB",
+    "marca": "NVIDIA",
+    "watt": 70,
+    "vram": 6,
+    "tdmark": 5000,
+    "busqueda": "RTX 3050 6GB",
+    "tdmarkAprox": true
   },
   {
     "id": "gtx-1660-super",
@@ -15,7 +26,8 @@
     "watt": 125,
     "vram": 6,
     "tdmark": 6000,
-    "busqueda": "GTX 1660 Super"
+    "busqueda": "GTX 1660 Super",
+    "tdmarkAprox": true
   },
   {
     "id": "gtx-1070",
@@ -24,25 +36,8 @@
     "watt": 150,
     "vram": 8,
     "tdmark": 6080,
-    "busqueda": "GTX 1070"
-  },
-  {
-    "id": "gtx-1080",
-    "nombre": "GeForce GTX 1080",
-    "marca": "NVIDIA",
-    "watt": 180,
-    "vram": 8,
-    "tdmark": 7570,
-    "busqueda": "GTX 1080"
-  },
-  {
-    "id": "rtx-2060",
-    "nombre": "GeForce RTX 2060",
-    "marca": "NVIDIA",
-    "watt": 160,
-    "vram": 6,
-    "tdmark": 7600,
-    "busqueda": "RTX 2060"
+    "busqueda": "GTX 1070",
+    "tdmarkAprox": true
   },
   {
     "id": "rtx-3050",
@@ -51,7 +46,28 @@
     "watt": 130,
     "vram": 8,
     "tdmark": 6200,
-    "busqueda": "RTX 3050 8GB"
+    "busqueda": "RTX 3050 8GB",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "gtx-1080",
+    "nombre": "GeForce GTX 1080",
+    "marca": "NVIDIA",
+    "watt": 180,
+    "vram": 8,
+    "tdmark": 7570,
+    "busqueda": "GTX 1080",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-2060",
+    "nombre": "GeForce RTX 2060",
+    "marca": "NVIDIA",
+    "watt": 160,
+    "vram": 6,
+    "tdmark": 7600,
+    "busqueda": "RTX 2060",
+    "tdmarkAprox": true
   },
   {
     "id": "rtx-3060-12gb",
@@ -60,34 +76,18 @@
     "watt": 170,
     "vram": 12,
     "tdmark": 8800,
-    "busqueda": "RTX 3060 12GB"
+    "busqueda": "RTX 3060 12GB",
+    "tdmarkAprox": true
   },
   {
-    "id": "rtx-3060-ti",
-    "nombre": "GeForce RTX 3060 Ti",
+    "id": "rtx-5050",
+    "nombre": "GeForce RTX 5050",
     "marca": "NVIDIA",
-    "watt": 200,
+    "watt": 130,
     "vram": 8,
-    "tdmark": 11700,
-    "busqueda": "RTX 3060 Ti"
-  },
-  {
-    "id": "rtx-3070",
-    "nombre": "GeForce RTX 3070",
-    "marca": "NVIDIA",
-    "watt": 220,
-    "vram": 8,
-    "tdmark": 13500,
-    "busqueda": "RTX 3070"
-  },
-  {
-    "id": "rtx-3080",
-    "nombre": "GeForce RTX 3080 10GB",
-    "marca": "NVIDIA",
-    "watt": 320,
-    "vram": 10,
-    "tdmark": 17500,
-    "busqueda": "RTX 3080 10GB"
+    "tdmark": 10000,
+    "busqueda": "RTX 5050",
+    "tdmarkAprox": true
   },
   {
     "id": "rtx-4060",
@@ -96,34 +96,18 @@
     "watt": 115,
     "vram": 8,
     "tdmark": 10600,
-    "busqueda": "RTX 4060"
+    "busqueda": "RTX 4060",
+    "tdmarkAprox": true
   },
   {
-    "id": "rtx-4060-ti-8gb",
-    "nombre": "GeForce RTX 4060 Ti 8GB",
-    "marca": "NVIDIA",
-    "watt": 160,
-    "vram": 8,
-    "tdmark": 13500,
-    "busqueda": "RTX 4060 Ti 8GB"
-  },
-  {
-    "id": "rtx-4070",
-    "nombre": "GeForce RTX 4070",
+    "id": "rtx-3060-ti",
+    "nombre": "GeForce RTX 3060 Ti",
     "marca": "NVIDIA",
     "watt": 200,
-    "vram": 12,
-    "tdmark": 17800,
-    "busqueda": "RTX 4070"
-  },
-  {
-    "id": "rtx-4070-super",
-    "nombre": "GeForce RTX 4070 Super",
-    "marca": "NVIDIA",
-    "watt": 220,
-    "vram": 12,
-    "tdmark": 20800,
-    "busqueda": "RTX 4070 Super"
+    "vram": 8,
+    "tdmark": 11700,
+    "busqueda": "RTX 3060 Ti",
+    "tdmarkAprox": true
   },
   {
     "id": "rtx-5060",
@@ -132,7 +116,28 @@
     "watt": 145,
     "vram": 8,
     "tdmark": 12800,
-    "busqueda": "RTX 5060"
+    "busqueda": "RTX 5060",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-3070",
+    "nombre": "GeForce RTX 3070",
+    "marca": "NVIDIA",
+    "watt": 220,
+    "vram": 8,
+    "tdmark": 13500,
+    "busqueda": "RTX 3070",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-4060-ti-8gb",
+    "nombre": "GeForce RTX 4060 Ti 8GB",
+    "marca": "NVIDIA",
+    "watt": 160,
+    "vram": 8,
+    "tdmark": 13500,
+    "busqueda": "RTX 4060 Ti 8GB",
+    "tdmarkAprox": true
   },
   {
     "id": "rtx-5060-ti-16gb",
@@ -141,7 +146,48 @@
     "watt": 180,
     "vram": 16,
     "tdmark": 15200,
-    "busqueda": "RTX 5060 Ti 16GB"
+    "busqueda": "RTX 5060 Ti 16GB",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-5060-ti-8gb",
+    "nombre": "GeForce RTX 5060 Ti 8GB",
+    "marca": "NVIDIA",
+    "watt": 180,
+    "vram": 8,
+    "tdmark": 15200,
+    "busqueda": "RTX 5060 Ti 8GB",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-3080",
+    "nombre": "GeForce RTX 3080 10GB",
+    "marca": "NVIDIA",
+    "watt": 320,
+    "vram": 10,
+    "tdmark": 17500,
+    "busqueda": "RTX 3080 10GB",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-4070",
+    "nombre": "GeForce RTX 4070",
+    "marca": "NVIDIA",
+    "watt": 200,
+    "vram": 12,
+    "tdmark": 17800,
+    "busqueda": "RTX 4070",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-4070-super",
+    "nombre": "GeForce RTX 4070 Super",
+    "marca": "NVIDIA",
+    "watt": 220,
+    "vram": 12,
+    "tdmark": 20800,
+    "busqueda": "RTX 4070 Super",
+    "tdmarkAprox": true
   },
   {
     "id": "rtx-5070",
@@ -149,8 +195,39 @@
     "marca": "NVIDIA",
     "watt": 250,
     "vram": 12,
-    "tdmark": 22500,
-    "busqueda": "RTX 5070"
+    "tdmark": 22000,
+    "busqueda": "RTX 5070",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-5070-ti",
+    "nombre": "GeForce RTX 5070 Ti",
+    "marca": "NVIDIA",
+    "watt": 300,
+    "vram": 16,
+    "tdmark": 26800,
+    "busqueda": "RTX 5070 Ti",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-5080",
+    "nombre": "GeForce RTX 5080",
+    "marca": "NVIDIA",
+    "watt": 360,
+    "vram": 16,
+    "tdmark": 32500,
+    "busqueda": "RTX 5080",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rtx-5090",
+    "nombre": "GeForce RTX 5090",
+    "marca": "NVIDIA",
+    "watt": 575,
+    "vram": 32,
+    "tdmark": 48500,
+    "busqueda": "RTX 5090",
+    "tdmarkAprox": true
   },
   {
     "id": "rx-580",
@@ -159,7 +236,8 @@
     "watt": 185,
     "vram": 8,
     "tdmark": 4300,
-    "busqueda": "RX 580 8GB"
+    "busqueda": "RX 580 8GB",
+    "tdmarkAprox": true
   },
   {
     "id": "rx-6600",
@@ -168,7 +246,8 @@
     "watt": 132,
     "vram": 8,
     "tdmark": 8000,
-    "busqueda": "RX 6600"
+    "busqueda": "RX 6600",
+    "tdmarkAprox": true
   },
   {
     "id": "rx-6650-xt",
@@ -177,16 +256,8 @@
     "watt": 180,
     "vram": 8,
     "tdmark": 9800,
-    "busqueda": "RX 6650 XT"
-  },
-  {
-    "id": "rx-6700-xt",
-    "nombre": "Radeon RX 6700 XT",
-    "marca": "AMD",
-    "watt": 230,
-    "vram": 12,
-    "tdmark": 12600,
-    "busqueda": "RX 6700 XT"
+    "busqueda": "RX 6650 XT",
+    "tdmarkAprox": true
   },
   {
     "id": "rx-7600",
@@ -195,25 +266,18 @@
     "watt": 165,
     "vram": 8,
     "tdmark": 10800,
-    "busqueda": "RX 7600"
+    "busqueda": "RX 7600",
+    "tdmarkAprox": true
   },
   {
-    "id": "rx-7700-xt",
-    "nombre": "Radeon RX 7700 XT",
+    "id": "rx-6700-xt",
+    "nombre": "Radeon RX 6700 XT",
     "marca": "AMD",
-    "watt": 245,
+    "watt": 230,
     "vram": 12,
-    "tdmark": 16500,
-    "busqueda": "RX 7700 XT"
-  },
-  {
-    "id": "rx-7800-xt",
-    "nombre": "Radeon RX 7800 XT",
-    "marca": "AMD",
-    "watt": 263,
-    "vram": 16,
-    "tdmark": 19800,
-    "busqueda": "RX 7800 XT"
+    "tdmark": 12600,
+    "busqueda": "RX 6700 XT",
+    "tdmarkAprox": true
   },
   {
     "id": "rx-9060-xt-16gb",
@@ -222,7 +286,78 @@
     "watt": 160,
     "vram": 16,
     "tdmark": 15000,
-    "busqueda": "RX 9060 XT 16GB"
+    "busqueda": "RX 9060 XT 16GB",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rx-9060-xt-8gb",
+    "nombre": "Radeon RX 9060 XT 8GB",
+    "marca": "AMD",
+    "watt": 150,
+    "vram": 8,
+    "tdmark": 15000,
+    "busqueda": "RX 9060 XT 8GB",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rx-7700-xt",
+    "nombre": "Radeon RX 7700 XT",
+    "marca": "AMD",
+    "watt": 245,
+    "vram": 12,
+    "tdmark": 16500,
+    "busqueda": "RX 7700 XT",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rx-7800-xt",
+    "nombre": "Radeon RX 7800 XT",
+    "marca": "AMD",
+    "watt": 263,
+    "vram": 16,
+    "tdmark": 19800,
+    "busqueda": "RX 7800 XT",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rx-9070-gre",
+    "nombre": "Radeon RX 9070 GRE",
+    "marca": "AMD",
+    "watt": 220,
+    "vram": 12,
+    "tdmark": 21500,
+    "busqueda": "RX 9070 GRE",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rx-9070",
+    "nombre": "Radeon RX 9070",
+    "marca": "AMD",
+    "watt": 220,
+    "vram": 16,
+    "tdmark": 25000,
+    "busqueda": "RX 9070",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "rx-9070-xt",
+    "nombre": "Radeon RX 9070 XT",
+    "marca": "AMD",
+    "watt": 304,
+    "vram": 16,
+    "tdmark": 28500,
+    "busqueda": "RX 9070 XT",
+    "tdmarkAprox": true
+  },
+  {
+    "id": "arc-b570",
+    "nombre": "Arc B570",
+    "marca": "Intel",
+    "watt": 150,
+    "vram": 10,
+    "tdmark": 12800,
+    "busqueda": "Arc B570",
+    "tdmarkAprox": true
   },
   {
     "id": "arc-b580",
@@ -231,6 +366,7 @@
     "watt": 190,
     "vram": 12,
     "tdmark": 14800,
-    "busqueda": "Arc B580"
+    "busqueda": "Arc B580",
+    "tdmarkAprox": true
   }
 ]

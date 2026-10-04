@@ -63,13 +63,11 @@ def placa_de(titulo, gpus):
     if not k:
         return None
     memorias = {int(x) for x in MEMORIA.findall(t)}
-    for kg, g in gpus:
-        if kg != k:
-            continue
-        if memorias and g["vram"] not in memorias:
-            continue
-        return g
-    return None
+    candidatas = [g for kg, g in gpus if kg == k]
+    if memorias:
+        candidatas = [g for g in candidatas if g["vram"] in memorias]
+    # Sin memoria en el título, "RTX 5060 Ti" puede ser la de 8 o la de 16 GB.
+    return candidatas[0] if len(candidatas) == 1 else None
 
 
 def texto(fragmento):

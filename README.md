@@ -4,7 +4,7 @@ Placas de video ordenadas por cuánto rinden por cada peso: puntos de 3DMark con
 
 Es una página estática (`index.html`) que lee dos archivos:
 
-- `data/gpus.json`: las placas. `id`, `nombre`, `marca`, `watt`, `vram`, `tdmark` (puntaje de 3DMark, la misma prueba para todas) y `busqueda` (lo que se busca en ML).
+- `data/gpus.json`: las placas. `id`, `nombre`, `marca`, `watt`, `vram`, `tdmark` (puntaje de 3DMark, la misma prueba para todas), `tdmarkAprox` (`true` mientras el puntaje no esté verificado; la página lo avisa) y `busqueda` (el nombre que se busca y con el que se reconocen los títulos).
 - `data/precios.json`: los precios, por `id` y condición:
 
 ```json
@@ -14,7 +14,9 @@ Es una página estática (`index.html`) que lee dos archivos:
                              "usada": {"precio": 400000, "publicaciones": 9} } } }
 ```
 
-Con `"ejemplo": true` la página muestra un cartel de que los precios no son reales. **Hoy los precios son de ejemplo y los puntajes de 3DMark son aproximados.**
+`fuenteNombre` y `fuenteUrl` se muestran arriba de la tabla, y `busquedas` dice adónde lleva el link del precio en cada condición (`{q}` es el nombre de la placa); sin eso, va al listado de Mercado Libre. Con `"ejemplo": true` la página avisa que los precios no son reales.
+
+**Hoy:** las nuevas tienen precios reales de HardGamers, que se actualizan solos todos los días; las usadas todavía no tienen fuente; los puntajes de 3DMark son aproximados.
 
 ## Cómo verla
 
@@ -38,8 +40,10 @@ Los precios se juntan en una PC con IP de casa: Mercado Libre bloquea las IPs de
 
 ```bash
 python scripts/hardgamers.py --categoria > data/precios.csv   # toda la categoría, ~4 min
-python scripts/precios_desde_csv.py data/precios.csv
+python scripts/precios_desde_csv.py data/precios.csv --fuente hardgamers
 ```
+
+El workflow `.github/workflows/precios.yml` hace esto todos los días a las 6:17 (hora argentina) y sube `precios.json` si cambió. Si encuentra menos de 200 publicaciones no actualiza nada y falla, para que se note si HardGamers cambió su página. También se puede correr a mano desde la pestaña Actions.
 
 `--categoria` recorre `/search?category=placas-de-video` página por página con 5 s entre pedidos, el Crawl-delay de su robots.txt. También acepta páginas guardadas o URLs sueltas. A diferencia de Mercado Libre, HardGamers responde desde servidores en la nube.
 
