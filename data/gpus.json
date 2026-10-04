@@ -1,47 +1,236 @@
 [
   {
-    "name": "NVIDIA RTX 3060 12GB",
-    "algo": "ethash",
-    "hashrate": 48,
-    "power": 130,
-    "priceArs": 450000,
-    "dailyProfitUsd": 0.6,
-    "url": "https://listado.mercadolibre.com.ar/rtx-3060-12gb",
-    "source": "MercadoLibre",
-    "priceDate": "2025-12-27"
+    "id": "gtx-1650",
+    "nombre": "GeForce GTX 1650",
+    "marca": "NVIDIA",
+    "watt": 75,
+    "vram": 4,
+    "tdmark": 3500,
+    "busqueda": "GTX 1650"
   },
   {
-    "name": "AMD RX 580 8GB",
-    "algo": "ethash",
-    "hashrate": 30,
-    "power": 140,
-    "priceArs": 200000,
-    "dailyProfitUsd": 0.3,
-    "url": "https://listado.mercadolibre.com.ar/rx-580-8gb",
-    "source": "MercadoLibre",
-    "priceDate": "2025-12-27",
-    "notes": "Usada en algunos listados"
+    "id": "gtx-1660-super",
+    "nombre": "GeForce GTX 1660 Super",
+    "marca": "NVIDIA",
+    "watt": 125,
+    "vram": 6,
+    "tdmark": 6000,
+    "busqueda": "GTX 1660 Super"
   },
   {
-    "name": "NVIDIA RTX 3080 10GB",
-    "algo": "ethash",
-    "hashrate": 95,
-    "power": 220,
-    "priceArs": 800000,
-    "dailyProfitUsd": 1.2,
-    "url": "https://listado.mercadolibre.com.ar/rtx-3080-10gb",
-    "source": "MercadoLibre",
-    "priceDate": "2025-12-27"
+    "id": "gtx-1070",
+    "nombre": "GeForce GTX 1070",
+    "marca": "NVIDIA",
+    "watt": 150,
+    "vram": 8,
+    "tdmark": 6080,
+    "busqueda": "GTX 1070"
   },
   {
-    "name": "NVIDIA GTX 1660 Super 6GB",
-    "algo": "ethash",
-    "hashrate": 26,
-    "power": 85,
-    "priceArs": 150000,
-    "dailyProfitUsd": 0.2,
-    "url": "https://listado.mercadolibre.com.ar/gtx-1660-super-6gb",
-    "source": "MercadoLibre",
-    "priceDate": "2025-12-27"
+    "id": "gtx-1080",
+    "nombre": "GeForce GTX 1080",
+    "marca": "NVIDIA",
+    "watt": 180,
+    "vram": 8,
+    "tdmark": 7570,
+    "busqueda": "GTX 1080"
+  },
+  {
+    "id": "rtx-2060",
+    "nombre": "GeForce RTX 2060",
+    "marca": "NVIDIA",
+    "watt": 160,
+    "vram": 6,
+    "tdmark": 7600,
+    "busqueda": "RTX 2060"
+  },
+  {
+    "id": "rtx-3050",
+    "nombre": "GeForce RTX 3050 8GB",
+    "marca": "NVIDIA",
+    "watt": 130,
+    "vram": 8,
+    "tdmark": 6200,
+    "busqueda": "RTX 3050 8GB"
+  },
+  {
+    "id": "rtx-3060-12gb",
+    "nombre": "GeForce RTX 3060 12GB",
+    "marca": "NVIDIA",
+    "watt": 170,
+    "vram": 12,
+    "tdmark": 8800,
+    "busqueda": "RTX 3060 12GB"
+  },
+  {
+    "id": "rtx-3060-ti",
+    "nombre": "GeForce RTX 3060 Ti",
+    "marca": "NVIDIA",
+    "watt": 200,
+    "vram": 8,
+    "tdmark": 11700,
+    "busqueda": "RTX 3060 Ti"
+  },
+  {
+    "id": "rtx-3070",
+    "nombre": "GeForce RTX 3070",
+    "marca": "NVIDIA",
+    "watt": 220,
+    "vram": 8,
+    "tdmark": 13500,
+    "busqueda": "RTX 3070"
+  },
+  {
+    "id": "rtx-3080",
+    "nombre": "GeForce RTX 3080 10GB",
+    "marca": "NVIDIA",
+    "watt": 320,
+    "vram": 10,
+    "tdmark": 17500,
+    "busqueda": "RTX 3080 10GB"
+  },
+  {
+    "id": "rtx-4060",
+    "nombre": "GeForce RTX 4060",
+    "marca": "NVIDIA",
+    "watt": 115,
+    "vram": 8,
+    "tdmark": 10600,
+    "busqueda": "RTX 4060"
+  },
+  {
+    "id": "rtx-4060-ti-8gb",
+    "nombre": "GeForce RTX 4060 Ti 8GB",
+    "marca": "NVIDIA",
+    "watt": 160,
+    "vram": 8,
+    "tdmark": 13500,
+    "busqueda": "RTX 4060 Ti 8GB"
+  },
+  {
+    "id": "rtx-4070",
+    "nombre": "GeForce RTX 4070",
+    "marca": "NVIDIA",
+    "watt": 200,
+    "vram": 12,
+    "tdmark": 17800,
+    "busqueda": "RTX 4070"
+  },
+  {
+    "id": "rtx-4070-super",
+    "nombre": "GeForce RTX 4070 Super",
+    "marca": "NVIDIA",
+    "watt": 220,
+    "vram": 12,
+    "tdmark": 20800,
+    "busqueda": "RTX 4070 Super"
+  },
+  {
+    "id": "rtx-5060",
+    "nombre": "GeForce RTX 5060",
+    "marca": "NVIDIA",
+    "watt": 145,
+    "vram": 8,
+    "tdmark": 12800,
+    "busqueda": "RTX 5060"
+  },
+  {
+    "id": "rtx-5060-ti-16gb",
+    "nombre": "GeForce RTX 5060 Ti 16GB",
+    "marca": "NVIDIA",
+    "watt": 180,
+    "vram": 16,
+    "tdmark": 15200,
+    "busqueda": "RTX 5060 Ti 16GB"
+  },
+  {
+    "id": "rtx-5070",
+    "nombre": "GeForce RTX 5070",
+    "marca": "NVIDIA",
+    "watt": 250,
+    "vram": 12,
+    "tdmark": 22500,
+    "busqueda": "RTX 5070"
+  },
+  {
+    "id": "rx-580",
+    "nombre": "Radeon RX 580 8GB",
+    "marca": "AMD",
+    "watt": 185,
+    "vram": 8,
+    "tdmark": 4300,
+    "busqueda": "RX 580 8GB"
+  },
+  {
+    "id": "rx-6600",
+    "nombre": "Radeon RX 6600",
+    "marca": "AMD",
+    "watt": 132,
+    "vram": 8,
+    "tdmark": 8000,
+    "busqueda": "RX 6600"
+  },
+  {
+    "id": "rx-6650-xt",
+    "nombre": "Radeon RX 6650 XT",
+    "marca": "AMD",
+    "watt": 180,
+    "vram": 8,
+    "tdmark": 9800,
+    "busqueda": "RX 6650 XT"
+  },
+  {
+    "id": "rx-6700-xt",
+    "nombre": "Radeon RX 6700 XT",
+    "marca": "AMD",
+    "watt": 230,
+    "vram": 12,
+    "tdmark": 12600,
+    "busqueda": "RX 6700 XT"
+  },
+  {
+    "id": "rx-7600",
+    "nombre": "Radeon RX 7600",
+    "marca": "AMD",
+    "watt": 165,
+    "vram": 8,
+    "tdmark": 10800,
+    "busqueda": "RX 7600"
+  },
+  {
+    "id": "rx-7700-xt",
+    "nombre": "Radeon RX 7700 XT",
+    "marca": "AMD",
+    "watt": 245,
+    "vram": 12,
+    "tdmark": 16500,
+    "busqueda": "RX 7700 XT"
+  },
+  {
+    "id": "rx-7800-xt",
+    "nombre": "Radeon RX 7800 XT",
+    "marca": "AMD",
+    "watt": 263,
+    "vram": 16,
+    "tdmark": 19800,
+    "busqueda": "RX 7800 XT"
+  },
+  {
+    "id": "rx-9060-xt-16gb",
+    "nombre": "Radeon RX 9060 XT 16GB",
+    "marca": "AMD",
+    "watt": 160,
+    "vram": 16,
+    "tdmark": 15000,
+    "busqueda": "RX 9060 XT 16GB"
+  },
+  {
+    "id": "arc-b580",
+    "nombre": "Arc B580",
+    "marca": "Intel",
+    "watt": 190,
+    "vram": 12,
+    "tdmark": 14800,
+    "busqueda": "Arc B580"
   }
 ]

@@ -1,81 +1,36 @@
-# Argentina BestValueGPU
+# BestValueGPU Argentina
 
-Página estilo *bestvaluegpu* / *Kryptex - best GPUs for mining*,
-adaptada a precios y contexto de Argentina.
+Placas de video ordenadas por cuánto rinden por cada peso: puntos de 3DMark contra el precio en Mercado Libre. La idea es la de [bestvaluegpu.com](https://bestvaluegpu.com), con precios argentinos.
 
-## TODO
+Es una página estática (`index.html`) que lee dos archivos:
 
-- Scraper / carga manual de datos de GPUs
-- Cálculo de:
-  - Hashrate
-  - Consumo
-  - Rentabilidad diaria
-  - Costo por MH/s
-  - ROI estimado en ARS / USD
-- Filtros por:
-  - Algoritmo / moneda
-  - Rango de precio
-  - Consumo eléctrico
+- `data/gpus.json`: las placas. `id`, `nombre`, `marca`, `watt`, `vram`, `tdmark` (puntaje de 3DMark, la misma prueba para todas) y `busqueda` (lo que se busca en ML).
+- `data/precios.json`: los precios, por `id` y condición:
 
-## Datos mock en JSON
-
-El frontend ahora consume `data/gpus.json` en vez de tener los datos embebidos en `src/app.js`. Esto permite:
-
-- Editar el archivo manualmente con precios reales en ARS.
-- Simular la respuesta del futuro backend/API (`/gpus`).
-- Mantener el mismo esquema de campos usado por la tabla.
-
-Para actualizar los datos podés reemplazar `data/gpus.json` mediante un script o scraper (por ejemplo, MercadoLibre).
-
-## Scraper de precios (MercadoLibre)
-
-Hay un script listo para consultar la API pública de MercadoLibre y refrescar los campos `priceArs` en `data/gpus.json`:
-
-```bash
-python scripts/mercadolibre_scraper.py          # actualiza precios in-place
-python scripts/mercadolibre_scraper.py --dry-run  # solo muestra resultados
+```json
+{ "ejemplo": false, "actualizado": "2026-10-04",
+  "precios": { "rtx-4060": { "nueva": {"precio": 520000, "publicaciones": 20},
+                             "usada": {"precio": 400000, "publicaciones": 9} } } }
 ```
 
-- Usa el campo `name` de cada GPU como query (opcionalmente se puede añadir `mlQuery` en el JSON para personalizar la búsqueda).
-- Por defecto inspecciona los primeros 10 resultados y toma el precio mínimo en ARS.
-- Incluye un `--sleep` configurable para no saturar la API pública.
+Con `"ejemplo": true` la página muestra un cartel de que los precios no son reales. **Hoy los precios son de ejemplo y los puntajes de 3DMark son aproximados.**
 
-## Backend API (FastAPI)
-
-Hay un backend mínimo en `backend/app.py` (FastAPI) que expone endpoints
-para servir los datos al frontend y disparar el scraper:
-
-- `GET /api/gpus`: lee `data/gpus.json` y devuelve el listado actual.
-- `POST /api/update-prices`: ejecuta el scraper internamente. Permite
-  `dry_run`, ajustar `max_results` y `sleep_seconds`.
+## Cómo verla
 
 ```bash
-curl -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"dry_run": true}' \
-  http://localhost:8000/api/update-prices
+python -m http.server 8000   # y abrir http://localhost:8000
 ```
 
-### Cómo levantarlo
+Abriendo `index.html` directo con doble clic no carga los datos: el navegador no deja leer archivos locales.
 
-```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -r backend/requirements.txt
-uvicorn backend.app:app --reload --port 8000
-```
+## Cómo actualizar los precios
 
-El backend ya incluye CORS abierto para poder usarlo desde el servidor
-estático (`python -m http.server`). Si preferís servir todo detrás del
-mismo dominio, montá el backend detrás de `/api` en tu reverse proxy.
+Los precios se juntan en una PC con IP de casa: Mercado Libre bloquea las IPs de servidores y de la nube (incluido GitHub Actions).
 
-### Frontend apuntando al backend
+1. Juntar las publicaciones en un CSV, una fila por publicación: `id,condicion,precio` (condición `nueva` o `usada`, precio en pesos sin puntos). Puede salir de un scraper o cargarse a mano.
+2. `python scripts/precios_desde_csv.py data/precios.csv` arma `data/precios.json`: por placa y condición, la mediana de las publicaciones después de sacar las que están a menos de la mitad o más del doble de la mediana.
+3. Commit y push.
 
-El frontend intenta cargar los datos siguiendo este orden:
+## Historia
 
-1. Endpoint definido por el query param `?api=` (por ejemplo,
-   `http://localhost:8000/api`).
-2. `/api/gpus` en el mismo origen.
-3. `data/gpus.json` (fallback local).
-
-Con esto podés seguir editando el JSON a mano, usar el backend local o
-implementar un proxy sin tocar el código del frontend.
+Hasta octubre de 2026 este repo era un comparador para minar (hashrate, ROI) con un backend FastAPI y un scraper que usaba la API de búsqueda de ML sin token. Ethereum dejó de minarse en 2022 y esa API pide token desde abril de 2025, así que se reemplazó; el código viejo queda en el historial de git.

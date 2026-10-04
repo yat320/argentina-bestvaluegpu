@@ -1,0 +1,203 @@
+{
+  "ejemplo": true,
+  "actualizado": "2026-10-04",
+  "fuente": "Precios de ejemplo inventados para armar la página. Los reemplaza el scraper.",
+  "precios": {
+    "gtx-1650": {
+      "usada": {
+        "precio": 120000,
+        "publicaciones": 10
+      }
+    },
+    "gtx-1660-super": {
+      "usada": {
+        "precio": 180000,
+        "publicaciones": 21
+      }
+    },
+    "gtx-1070": {
+      "usada": {
+        "precio": 170000,
+        "publicaciones": 20
+      }
+    },
+    "gtx-1080": {
+      "usada": {
+        "precio": 220000,
+        "publicaciones": 7
+      }
+    },
+    "rtx-2060": {
+      "usada": {
+        "precio": 210000,
+        "publicaciones": 14
+      }
+    },
+    "rtx-3050": {
+      "nueva": {
+        "precio": 360000,
+        "publicaciones": 36
+      },
+      "usada": {
+        "precio": 230000,
+        "publicaciones": 23
+      }
+    },
+    "rtx-3060-12gb": {
+      "nueva": {
+        "precio": 480000,
+        "publicaciones": 10
+      },
+      "usada": {
+        "precio": 300000,
+        "publicaciones": 22
+      }
+    },
+    "rtx-3060-ti": {
+      "usada": {
+        "precio": 380000,
+        "publicaciones": 3
+      }
+    },
+    "rtx-3070": {
+      "usada": {
+        "precio": 430000,
+        "publicaciones": 18
+      }
+    },
+    "rtx-3080": {
+      "usada": {
+        "precio": 600000,
+        "publicaciones": 11
+      }
+    },
+    "rtx-4060": {
+      "nueva": {
+        "precio": 520000,
+        "publicaciones": 20
+      },
+      "usada": {
+        "precio": 400000,
+        "publicaciones": 9
+      }
+    },
+    "rtx-4060-ti-8gb": {
+      "nueva": {
+        "precio": 680000,
+        "publicaciones": 36
+      },
+      "usada": {
+        "precio": 520000,
+        "publicaciones": 20
+      }
+    },
+    "rtx-4070": {
+      "nueva": {
+        "precio": 950000,
+        "publicaciones": 36
+      },
+      "usada": {
+        "precio": 760000,
+        "publicaciones": 15
+      }
+    },
+    "rtx-4070-super": {
+      "nueva": {
+        "precio": 1150000,
+        "publicaciones": 15
+      },
+      "usada": {
+        "precio": 900000,
+        "publicaciones": 10
+      }
+    },
+    "rtx-5060": {
+      "nueva": {
+        "precio": 590000,
+        "publicaciones": 15
+      }
+    },
+    "rtx-5060-ti-16gb": {
+      "nueva": {
+        "precio": 820000,
+        "publicaciones": 39
+      }
+    },
+    "rtx-5070": {
+      "nueva": {
+        "precio": 1200000,
+        "publicaciones": 30
+      }
+    },
+    "rx-580": {
+      "usada": {
+        "precio": 110000,
+        "publicaciones": 3
+      }
+    },
+    "rx-6600": {
+      "nueva": {
+        "precio": 380000,
+        "publicaciones": 10
+      },
+      "usada": {
+        "precio": 250000,
+        "publicaciones": 8
+      }
+    },
+    "rx-6650-xt": {
+      "nueva": {
+        "precio": 450000,
+        "publicaciones": 8
+      },
+      "usada": {
+        "precio": 300000,
+        "publicaciones": 12
+      }
+    },
+    "rx-6700-xt": {
+      "usada": {
+        "precio": 400000,
+        "publicaciones": 3
+      }
+    },
+    "rx-7600": {
+      "nueva": {
+        "precio": 470000,
+        "publicaciones": 23
+      },
+      "usada": {
+        "precio": 350000,
+        "publicaciones": 18
+      }
+    },
+    "rx-7700-xt": {
+      "nueva": {
+        "precio": 750000,
+        "publicaciones": 30
+      }
+    },
+    "rx-7800-xt": {
+      "nueva": {
+        "precio": 920000,
+        "publicaciones": 33
+      },
+      "usada": {
+        "precio": 720000,
+        "publicaciones": 15
+      }
+    },
+    "rx-9060-xt-16gb": {
+      "nueva": {
+        "precio": 690000,
+        "publicaciones": 34
+      }
+    },
+    "arc-b580": {
+      "nueva": {
+        "precio": 560000,
+        "publicaciones": 14
+      }
+    }
+  }
+}
