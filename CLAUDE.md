@@ -3,7 +3,7 @@
 Página estática que ordena placas de video por puntos de 3DMark por peso, con precios de Mercado Libre Argentina. Ver el README para el formato de `data/gpus.json` y `data/precios.json`.
 
 - Rendimiento: puntaje de 3DMark, siempre la misma prueba para todas las placas (en la escala de bestvaluegpu, una GTX 1070 da ~6080 y una GTX 1080 ~7570). Los valores actuales son aproximados y hay que verificarlos.
-- Value: puntos por cada $100.000, llevado a 100 para la mejor placa visible. Nuevas y usadas se calculan por separado.
+- Value: puntos por cada $100.000 en escala de 0 a 100, donde 100 es la mejor placa de esa condición (nuevas y usadas por separado). La búsqueda y el filtro de marca no lo cambian. Se muestran las dos columnas a propósito: pts/$100k sirve para comparar en el tiempo y Value de un vistazo.
 - Precio: la mediana de las publicaciones del modelo exacto, nunca el mínimo de una búsqueda.
 
 ## Lo que ya sabemos de Mercado Libre (no volver a equivocarse acá)
