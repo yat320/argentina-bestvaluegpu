@@ -32,6 +32,17 @@ Los precios se juntan en una PC con IP de casa: Mercado Libre bloquea las IPs de
 2. `python scripts/precios_desde_csv.py data/precios.csv` arma `data/precios.json`: por placa y condición, la mediana de las publicaciones después de sacar las que están a menos de la mitad o más del doble de la mediana, y la más barata que quedó con su link (`barata`), que la página muestra debajo del precio.
 3. Commit y push.
 
+### Desde HardGamers (placas nuevas)
+
+[HardGamers](https://www.hardgamers.com.ar) junta productos nuevos de tiendas argentinas, con precio en pesos y link a la tienda. `scripts/hardgamers.py` lee sus páginas (guardadas con Ctrl+S o por URL), se queda con los productos que coinciden con una placa de `gpus.json` (misma línea, número, variante Ti/Super/XT y VRAM; descarta notebooks, PCs y accesorios) y escribe el CSV:
+
+```bash
+python scripts/hardgamers.py busqueda-4060.html producto-3060.html > data/precios.csv
+python scripts/precios_desde_csv.py data/precios.csv
+```
+
+Cada fila lleva el link a la página del producto en HardGamers, que muestra la tienda. Las usadas siguen saliendo de Mercado Libre.
+
 ## Historia
 
 Hasta octubre de 2026 este repo era un comparador para minar (hashrate, ROI) con un backend FastAPI y un scraper que usaba la API de búsqueda de ML sin token. Ethereum dejó de minarse en 2022 y esa API pide token desde abril de 2025, así que se reemplazó; el código viejo queda en el historial de git.
