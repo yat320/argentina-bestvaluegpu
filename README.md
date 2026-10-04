@@ -9,7 +9,8 @@ Es una página estática (`index.html`) que lee dos archivos:
 
 ```json
 { "ejemplo": false, "actualizado": "2026-10-04",
-  "precios": { "rtx-4060": { "nueva": {"precio": 520000, "publicaciones": 20},
+  "precios": { "rtx-4060": { "nueva": {"precio": 520000, "publicaciones": 20,
+                                       "barata": {"precio": 489999, "url": "https://articulo.mercadolibre.com.ar/MLA-..."}},
                              "usada": {"precio": 400000, "publicaciones": 9} } } }
 ```
 
@@ -27,8 +28,8 @@ Abriendo `index.html` directo con doble clic no carga los datos: el navegador no
 
 Los precios se juntan en una PC con IP de casa: Mercado Libre bloquea las IPs de servidores y de la nube (incluido GitHub Actions).
 
-1. Juntar las publicaciones en un CSV, una fila por publicación: `id,condicion,precio` (condición `nueva` o `usada`, precio en pesos sin puntos). Puede salir de un scraper o cargarse a mano.
-2. `python scripts/precios_desde_csv.py data/precios.csv` arma `data/precios.json`: por placa y condición, la mediana de las publicaciones después de sacar las que están a menos de la mitad o más del doble de la mediana.
+1. Juntar las publicaciones en un CSV, una fila por publicación: `id,condicion,precio,url` (condición `nueva` o `usada`, precio en pesos sin puntos, url opcional). Puede salir de un scraper o cargarse a mano.
+2. `python scripts/precios_desde_csv.py data/precios.csv` arma `data/precios.json`: por placa y condición, la mediana de las publicaciones después de sacar las que están a menos de la mitad o más del doble de la mediana, y la más barata que quedó con su link (`barata`), que la página muestra debajo del precio.
 3. Commit y push.
 
 ## Historia

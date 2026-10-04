@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """Arma data/precios.json desde un CSV de precios cargados a mano o por un scraper.
 
-El CSV tiene una fila por publicación: id,condicion,precio
+El CSV tiene una fila por publicación: id,condicion,precio[,url]
   - id: el de data/gpus.json (por ejemplo rtx-4060)
   - condicion: nueva o usada
   - precio: en pesos, sin puntos
+  - url (opcional): link a la publicación
 
 Por cada placa y condición guarda la mediana de lo que queda después de
-descartar los precios a más de la mitad o el doble de la mediana, y cuántas
-publicaciones quedaron.
+descartar los precios a menos de la mitad o más del doble de la mediana,
+cuántas publicaciones quedaron y la más barata de ellas que tenga url.
 
     python scripts/precios_desde_csv.py data/precios.csv
 """
@@ -22,9 +23,9 @@ from statistics import median
 DATA = Path(__file__).resolve().parent.parent / "data"
 
 
-def limpiar(precios):
-    m = median(precios)
-    return [p for p in precios if m / 2 <= p <= m * 2]
+def limpiar(pubs):
+    m = median(p for p, _ in pubs)
+    return [(p, u) for p, u in pubs if m / 2 <= p <= m * 2]
 
 
 def main(ruta_csv):
@@ -39,16 +40,22 @@ def main(ruta_csv):
             if cond not in ("nueva", "usada"):
                 print(f"[aviso] condición inválida en {gid}: {cond}", file=sys.stderr)
                 continue
-            crudos.setdefault(gid, {}).setdefault(cond, []).append(float(fila["precio"]))
+            url = (fila.get("url") or "").strip()
+            crudos.setdefault(gid, {}).setdefault(cond, []).append((float(fila["precio"]), url))
 
     precios = {}
     for gid, conds in crudos.items():
         for cond, lista in conds.items():
             buenos = limpiar(lista)
-            precios.setdefault(gid, {})[cond] = {
-                "precio": round(median(buenos)),
+            dato = {
+                "precio": round(median(p for p, _ in buenos)),
                 "publicaciones": len(buenos),
             }
+            con_url = [(p, u) for p, u in buenos if u]
+            if con_url:
+                p, u = min(con_url)
+                dato["barata"] = {"precio": round(p), "url": u}
+            precios.setdefault(gid, {})[cond] = dato
 
     salida = {
         "ejemplo": False,
