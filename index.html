@@ -1,63 +1,167 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <title>Argentina BestValueGPU</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta
-    name="description"
-    content="Ranking de mejores GPUs para minería en Argentina por precio, consumo y rentabilidad."
-  >
-  <link rel="stylesheet" href="src/style.css">
-</head>
-<body>
-  <header class="topbar">
-    <div class="logo">
-      <span class="logo-main">Argentina BestValueGPU</span>
-      <span class="logo-sub">Comparador educativo de GPUs para minería</span>
-    </div>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BestValueGPU Argentina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Una tabla de banco de pruebas: encabezado compacto, filtros en una fila, la tabla manda. Celeste de acento. */
+:root{
+  --bg:#f3f6f8; --surface:#ffffff; --line:#dbe3e9; --fg:#14212b; --muted:#5b6b78;
+  --accent:#1f7fbf; --accent-soft:#e2f0fa; --warn:#8a5a00; --warn-bg:#fff4d6;
+  --bar:#cfe4f3;
+  --display:"Archivo",system-ui,sans-serif; --body:"Archivo",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d151c; --surface:#131e27; --line:#223240; --fg:#e4edf3; --muted:#8fa3b3;
+  --accent:#5db4ec; --accent-soft:#16304a; --warn:#ffd27a; --warn-bg:#2e2410; --bar:#1d3a52; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d151c; --surface:#131e27; --line:#223240; --fg:#e4edf3; --muted:#8fa3b3;
+  --accent:#5db4ec; --accent-soft:#16304a; --warn:#ffd27a; --warn-bg:#2e2410; --bar:#1d3a52; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.45}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:20px 40px;display:grid;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
+h1{font-family:var(--display);font-stretch:80%;font-weight:800;font-size:1.7rem;letter-spacing:-.01em;margin:0;text-wrap:balance}
+h1 span{color:var(--accent)}
+.sub{color:var(--muted);margin:0;font-size:.92rem}
+.aviso{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:10px 12px;font-size:.9rem}
+.aviso b{font-weight:700}
+.filtros{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filtros input{flex:1 1 220px;min-width:0;font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{font:inherit;font-size:.9rem;border:0;background:none;color:var(--muted);padding:8px 12px;min-height:36px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--fg);font-weight:600}
+button:focus-visible,input:focus-visible,a:focus-visible,th:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tabla{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-variant-numeric:tabular-nums}
+th,td{padding:10px 12px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;cursor:pointer;user-select:none;position:sticky;top:0;background:var(--surface)}
+th[aria-sort] {color:var(--fg)}
+th[aria-sort="descending"]::after{content:" ▾"} th[aria-sort="ascending"]::after{content:" ▴"}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--surface)}
+td.num{font-family:var(--mono);font-size:.88rem}
+.nom{font-weight:600}
+.marca{display:block;color:var(--muted);font-size:.75rem;font-weight:400}
+.precio a{color:var(--accent);text-decoration:none}
+.precio a:hover{text-decoration:underline}
+.n{display:block;color:var(--muted);font-size:.72rem;font-family:var(--body)}
+.value{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.value .b{width:56px;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.value .b i{display:block;height:100%;background:var(--accent)}
+.value b{font-family:var(--mono);font-weight:500;min-width:2ch}
+.vacio{padding:24px;text-align:center;color:var(--muted)}
+.notas{color:var(--muted);font-size:.85rem;display:grid;gap:6px;max-width:68ch}
+.notas p{margin:0}
+@media (prefers-reduced-motion:no-preference){.value .b i{transition:width .3s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>BestValueGPU <span>Argentina</span></h1>
+    <p class="sub" id="fecha">Placas de video: puntos de 3DMark por cada peso</p>
   </header>
 
-  <main class="container">
-    <section class="filters">
-      <h2>Buscar</h2>
-      <div class="filter-row">
-        <label>
-          Buscar GPU:
-          <input type="text" id="searchInput" placeholder="RTX 3060, RX 580..." />
-        </label>
-      </div>
-    </section>
+  <div class="aviso" id="aviso" hidden><b>Precios de ejemplo.</b> Son inventados para armar la página; todavía no salen de Mercado Libre. El rendimiento (3DMark) es aproximado.</div>
 
-    <section class="table-section">
-      <h2>Ranking de GPUs</h2>
-      <div class="table-wrapper">
-        <table id="gpuTable">
-          <thead>
-            <tr>
-              <th data-key="name">Nombre</th>
-              <th>Fuente / Fecha</th>
-              <th data-key="algo">Algoritmo</th>
-              <th data-key="hashrate">Hashrate (MH/s)</th>
-              <th data-key="power">Consumo (W)</th>
-              <th data-key="efficiency">Eficiencia (MH/W)</th>
-              <th data-key="priceArs">Precio (ARS)</th>
-              <th data-key="dailyProfit">Ganancia Día (ARS)</th>
-              <th data-key="roi">ROI (días)</th>
-            </tr>
-          </thead>
-          <tbody id="gpu-tbody">
-            <!-- Las filas se insertarán aquí dinámicamente -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
+  <div class="filtros">
+    <input id="buscar" type="search" placeholder="Buscar placa: 4060, RX 7600…" aria-label="Buscar placa">
+    <div class="seg" role="group" aria-label="Condición">
+      <button id="c-nueva" data-cond="nueva" aria-pressed="true">Nuevas</button>
+      <button id="c-usada" data-cond="usada" aria-pressed="false">Usadas</button>
+    </div>
+    <div class="seg" role="group" aria-label="Marca">
+      <button id="m-todas" data-marca="" aria-pressed="true">Todas</button>
+      <button id="m-nvidia" data-marca="NVIDIA" aria-pressed="false">NVIDIA</button>
+      <button id="m-amd" data-marca="AMD" aria-pressed="false">AMD</button>
+      <button id="m-intel" data-marca="Intel" aria-pressed="false">Intel</button>
+    </div>
+  </div>
 
-  <footer class="footer">
-    <span>Proyecto Argentina BestValueGPU · Datos de referencia, no asesoría financiera.</span>
-  </footer>
+  <div class="tabla">
+    <table>
+      <thead><tr>
+        <th data-k="nombre" tabindex="0">Placa</th>
+        <th data-k="value" tabindex="0">Value</th>
+        <th data-k="precio" tabindex="0">Precio</th>
+        <th data-k="ppk" tabindex="0">Pts / $100k</th>
+        <th data-k="tdmark" tabindex="0">3DMark</th>
+        <th data-k="vram" tabindex="0">VRAM</th>
+        <th data-k="watt" tabindex="0">Consumo</th>
+      </tr></thead>
+      <tbody id="filas"><tr><td colspan="7" class="vacio">Cargando placas…</td></tr></tbody>
+    </table>
+  </div>
 
-  <script src="src/app.js"></script>
-</body>
-</html>
+  <div class="notas">
+    <p><b>Precio:</b> la mediana de las publicaciones de Mercado Libre que coinciden con el modelo exacto, sin accesorios, notebooks ni precios falsos. Nuevas y usadas van por separado.</p>
+    <p><b>Value:</b> puntos de 3DMark por cada $100.000, llevado a 100 para la placa que más rinde por peso entre las que se ven.</p>
+  </div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const fmt=n=>'$'+Math.round(n).toLocaleString('es-AR');
+let gpus=[],precios={},cond='nueva',marca='',orden={k:'value',dir:-1};
+
+function slug(s){return s.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+
+function filas(){
+  const q=$('#buscar').value.trim().toLowerCase();
+  let rs=gpus.map(g=>{
+    const p=(precios[g.id]||{})[cond];
+    return p?{...g,precio:p.precio,pubs:p.publicaciones,ppk:g.tdmark/(p.precio/1e5)}:null;
+  }).filter(Boolean);
+  const max=Math.max(0,...rs.map(r=>r.ppk));
+  rs.forEach(r=>r.value=max?Math.round(100*r.ppk/max):0);
+  rs=rs.filter(r=>(!marca||r.marca===marca)&&(!q||r.nombre.toLowerCase().includes(q)));
+  const {k,dir}=orden;
+  rs.sort((a,b)=>typeof a[k]==='string'?dir*a[k].localeCompare(b[k]):dir*(a[k]-b[k]));
+  return rs;
+}
+
+function pintar(){
+  const rs=filas();
+  document.querySelectorAll('th').forEach(th=>{
+    if(th.dataset.k===orden.k)th.setAttribute('aria-sort',orden.dir<0?'descending':'ascending');
+    else th.removeAttribute('aria-sort');
+  });
+  if(!rs.length){$('#filas').innerHTML=`<tr><td colspan="7" class="vacio">No hay placas ${cond==='nueva'?'nuevas':'usadas'} con ese filtro.</td></tr>`;return}
+  $('#filas').innerHTML=rs.map(r=>{
+    const url='https://listado.mercadolibre.com.ar/'+slug(r.busqueda);
+    return `<tr>
+      <td><span class="nom">${r.nombre}</span><span class="marca">${r.marca}</span></td>
+      <td><div class="value"><span class="b"><i style="width:${r.value}%"></i></span><b>${r.value}</b></div></td>
+      <td class="num precio"><a href="${url}" target="_blank" rel="noopener">${fmt(r.precio)}</a><span class="n">${r.pubs} publicaciones</span></td>
+      <td class="num">${Math.round(r.ppk).toLocaleString('es-AR')}</td>
+      <td class="num">${r.tdmark.toLocaleString('es-AR')}</td>
+      <td class="num">${r.vram} GB</td>
+      <td class="num">${r.watt} W</td>
+    </tr>`}).join('');
+}
+
+function grupo(attr,set){
+  document.querySelectorAll(`[data-${attr}]`).forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll(`[data-${attr}]`).forEach(x=>x.setAttribute('aria-pressed',x===b));
+    set(b.dataset[attr]);pintar();
+  }));
+}
+grupo('cond',v=>cond=v);
+grupo('marca',v=>marca=v);
+$('#buscar').addEventListener('input',pintar);
+document.querySelectorAll('th').forEach(th=>{
+  const ir=()=>{const k=th.dataset.k;orden=orden.k===k?{k,dir:-orden.dir}:{k,dir:k==='nombre'||k==='precio'||k==='watt'?1:-1};pintar()};
+  th.addEventListener('click',ir);
+  th.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();ir()}});
+});
+
+Promise.all([fetch('data/gpus.json').then(r=>r.json()),fetch('data/precios.json').then(r=>r.json())])
+  .then(([g,p])=>{
+    gpus=g;precios=p.precios||{};
+    $('#aviso').hidden=!p.ejemplo;
+    if(p.actualizado)$('#fecha').textContent=`Placas de video: puntos de 3DMark por cada peso · precios del ${p.actualizado.split('-').reverse().join('/')}`;
+    pintar();
+  })
+  .catch(()=>{$('#filas').innerHTML='<tr><td colspan="7" class="vacio">No se pudieron cargar los datos (data/gpus.json y data/precios.json).</td></tr>'});
+</script>

@@ -1,0 +1,25 @@
+# Secretos (token de ML, client secret, etc.)
+.env
+.env.*
+!.env.example
+
+# Entorno de Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Bases de datos y datos bajados
+*.sqlite
+*.sqlite3
+*.db
+
+# Páginas HTML guardadas para depurar
+debug/
+*.html.cache
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
