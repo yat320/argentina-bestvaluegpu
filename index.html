@@ -95,7 +95,7 @@ td.num{font-family:var(--mono);font-size:.88rem}
   </div>
 
   <div class="notas">
-    <p><b>Precio:</b> la mediana de las publicaciones de Mercado Libre que coinciden con el modelo exacto, sin accesorios, notebooks ni precios falsos. Nuevas y usadas van por separado.</p>
+    <p><b>Precio:</b> la mediana de las publicaciones de Mercado Libre que coinciden con el modelo exacto, sin accesorios, notebooks ni precios falsos. Nuevas y usadas van por separado. El precio abre la búsqueda en Mercado Libre; "la más barata" lleva a la publicación más barata que pasó los filtros.</p>
     <p><b>Value:</b> puntos de 3DMark por cada $100.000, llevado a 100 para la placa que más rinde por peso entre las que se ven.</p>
   </div>
 </div>
@@ -105,13 +105,15 @@ const $=s=>document.querySelector(s);
 const fmt=n=>'$'+Math.round(n).toLocaleString('es-AR');
 let gpus=[],precios={},cond='nueva',marca='',orden={k:'value',dir:-1};
 
+// Filtro de condición del listado de ML.
+const COND={nueva:'_ITEM*CONDITION_2230284_NoIndex_True',usada:'_ITEM*CONDITION_2230581_NoIndex_True'};
 function slug(s){return s.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
 
 function filas(){
   const q=$('#buscar').value.trim().toLowerCase();
   let rs=gpus.map(g=>{
     const p=(precios[g.id]||{})[cond];
-    return p?{...g,precio:p.precio,pubs:p.publicaciones,ppk:g.tdmark/(p.precio/1e5)}:null;
+    return p?{...g,precio:p.precio,pubs:p.publicaciones,barata:p.barata,ppk:g.tdmark/(p.precio/1e5)}:null;
   }).filter(Boolean);
   const max=Math.max(0,...rs.map(r=>r.ppk));
   rs.forEach(r=>r.value=max?Math.round(100*r.ppk/max):0);
@@ -129,11 +131,13 @@ function pintar(){
   });
   if(!rs.length){$('#filas').innerHTML=`<tr><td colspan="7" class="vacio">No hay placas ${cond==='nueva'?'nuevas':'usadas'} con ese filtro.</td></tr>`;return}
   $('#filas').innerHTML=rs.map(r=>{
-    const url='https://listado.mercadolibre.com.ar/'+slug(r.busqueda);
+    const url='https://listado.mercadolibre.com.ar/'+slug(r.busqueda)+COND[cond];
+    const extra=r.barata&&r.barata.url
+      ?`<span class="n">la más barata: <a href="${r.barata.url}" target="_blank" rel="noopener">${fmt(r.barata.precio)}</a></span>`:'';
     return `<tr>
       <td><span class="nom">${r.nombre}</span><span class="marca">${r.marca}</span></td>
       <td><div class="value"><span class="b"><i style="width:${r.value}%"></i></span><b>${r.value}</b></div></td>
-      <td class="num precio"><a href="${url}" target="_blank" rel="noopener">${fmt(r.precio)}</a><span class="n">${r.pubs} publicaciones</span></td>
+      <td class="num precio"><a href="${url}" target="_blank" rel="noopener">${fmt(r.precio)}</a><span class="n">${r.pubs} publicaciones</span>${extra}</td>
       <td class="num">${Math.round(r.ppk).toLocaleString('es-AR')}</td>
       <td class="num">${r.tdmark.toLocaleString('es-AR')}</td>
       <td class="num">${r.vram} GB</td>
