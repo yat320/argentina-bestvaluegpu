@@ -5,8 +5,10 @@ HardGamers junta productos nuevos de tiendas argentinas. Cada producto viene
 con microdatos de schema.org (nombre, precio en ARS, condición), así que no
 depende del diseño de la página.
 
-Lee páginas guardadas desde el navegador (Ctrl+S) o las baja de una URL, y
-escribe un CSV con el formato de precios_desde_csv.py:
+Lee páginas guardadas desde el navegador (Ctrl+S), las baja de una URL o
+recorre la categoría entera de placas de video (--categoria, página por
+página, respetando el Crawl-delay de 5 s de su robots.txt), y escribe un CSV
+con el formato de precios_desde_csv.py:
 
     id,condicion,precio,url,tienda,titulo
 
@@ -14,8 +16,8 @@ Solo quedan las publicaciones cuyo título coincide con una placa de
 data/gpus.json: misma línea (RTX, GTX, RX, Arc), mismo número, misma variante
 (Ti, Super, XT…) y, si el título dice la memoria, la misma VRAM.
 
-    python scripts/hardgamers.py pagina1.html pagina2.html > data/precios.csv
-    python scripts/hardgamers.py "https://www.hardgamers.com.ar/..." >> data/precios.csv
+    python scripts/hardgamers.py --categoria > data/precios.csv
+    python scripts/hardgamers.py pagina1.html "https://www.hardgamers.com.ar/..." > data/precios.csv
 """
 import csv
 import html
@@ -28,10 +30,12 @@ from urllib.request import Request, urlopen
 
 DATA = Path(__file__).resolve().parent.parent / "data"
 BASE = "https://www.hardgamers.com.ar"
+CATEGORIA = BASE + "/search?category=placas-de-video&page={}"
+PAUSA = 5  # Crawl-delay de su robots.txt
 
 # Línea, número y variante: "RTX 4060 TI", "RX7600 XT", "ARC B580".
 CHIP = re.compile(r"\b(RTX|GTX|RX|ARC)\s*-?\s*([A-Z]?\d{3,4})(?:\s*(TI|SUPER|XTX|XT|GRE))?\b")
-MEMORIA = re.compile(r"\b(\d{1,2})\s*GB\b")
+MEMORIA = re.compile(r"\b(\d{1,2})\s*GB?\b")  # "8GB", "8 GB" y "8G"
 # Títulos que nombran la placa pero no son una placa suelta.
 NO_ES_PLACA = re.compile(
     r"\b(NOTEBOOK|LAPTOP|PC\s+(GAMER|ARMADA)|COMBO|KIT|COOLER|FAN|VENTILADOR|"
@@ -76,16 +80,18 @@ def productos(pagina):
     """(titulo, precio, url, tienda) de cada producto de la página."""
     # Tarjetas de producto (búsqueda y "similares" de una página de producto).
     for art in re.findall(r"<article\b.*?</article>", pagina, re.S):
-        nombre = re.search(r'itemprop="name"[^>]*>(.*?)<', art, re.S)
+        # El primer itemprop="name" suele ser la marca (un <meta> vacío).
+        nombre = re.search(r'class="product-name"[^>]*>(.*?)<', art, re.S)
         precio = re.search(r'itemprop="price"\s+content="(\d+(?:\.\d+)?)"', art)
-        url = re.search(r'href="(https://www\.hardgamers\.com\.ar/product/[^"]+)"', art)
+        url = re.search(r'<a\s+href="((?:https://www\.hardgamers\.com\.ar)?/product/[^"]+)"', art)
         tienda = re.search(r'class="store"[^>]*>(.*?)<', art, re.S)
         cond = re.search(r'itemprop="itemCondition"\s+href="[^"]*/(\w+)"', art)
         if not (nombre and precio and url):
             continue
         if cond and cond.group(1) != "NewCondition":
             continue
-        yield (texto(nombre.group(1)), float(precio.group(1)), url.group(1),
+        link = url.group(1) if url.group(1).startswith("http") else BASE + url.group(1)
+        yield (texto(nombre.group(1)), float(precio.group(1)), link,
                texto(tienda.group(1)) if tienda else "")
     # El producto principal de una página de producto.
     canonico = re.search(r'<link rel="canonical" href="([^"]+/product/[^"]+)"', pagina)
@@ -105,16 +111,38 @@ def leer(fuente):
     return Path(fuente).read_text(encoding="utf-8", errors="replace")
 
 
+def paginas_categoria():
+    """Las páginas de la categoría, hasta una sin productos o repetida."""
+    anterior = None
+    for n in range(1, 200):
+        if n > 1:
+            time.sleep(PAUSA)
+        url = CATEGORIA.format(n)
+        pagina = leer(url)
+        ids = re.findall(r'<a\s+href="[^"]*/product/([^"]+)"', pagina)
+        if not ids or ids == anterior:
+            return
+        anterior = ids
+        yield url, pagina
+
+
 def main(fuentes):
     gpus = cargar_gpus()
+    if fuentes == ["--categoria"]:
+        paginas = paginas_categoria()
+    else:
+        def paginas_sueltas():
+            for i, f in enumerate(fuentes):
+                if i and f.startswith("http"):
+                    time.sleep(PAUSA)
+                yield f, leer(f)
+        paginas = paginas_sueltas()
     out = csv.writer(sys.stdout)
     out.writerow(["id", "condicion", "precio", "url", "tienda", "titulo"])
     vistos = set()
-    for i, fuente in enumerate(fuentes):
-        if i and fuente.startswith("http"):
-            time.sleep(3)  # despacio con el sitio
+    for fuente, pagina in paginas:
         n = 0
-        for titulo, precio, url, tienda in productos(leer(fuente)):
+        for titulo, precio, url, tienda in productos(pagina):
             g = placa_de(titulo, gpus)
             if not g or url in vistos:
                 if not g:

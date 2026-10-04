@@ -37,9 +37,11 @@ Los precios se juntan en una PC con IP de casa: Mercado Libre bloquea las IPs de
 [HardGamers](https://www.hardgamers.com.ar) junta productos nuevos de tiendas argentinas, con precio en pesos y link a la tienda. `scripts/hardgamers.py` lee sus páginas (guardadas con Ctrl+S o por URL), se queda con los productos que coinciden con una placa de `gpus.json` (misma línea, número, variante Ti/Super/XT y VRAM; descarta notebooks, PCs y accesorios) y escribe el CSV:
 
 ```bash
-python scripts/hardgamers.py busqueda-4060.html producto-3060.html > data/precios.csv
+python scripts/hardgamers.py --categoria > data/precios.csv   # toda la categoría, ~4 min
 python scripts/precios_desde_csv.py data/precios.csv
 ```
+
+`--categoria` recorre `/search?category=placas-de-video` página por página con 5 s entre pedidos, el Crawl-delay de su robots.txt. También acepta páginas guardadas o URLs sueltas. A diferencia de Mercado Libre, HardGamers responde desde servidores en la nube.
 
 Cada fila lleva el link a la página del producto en HardGamers, que muestra la tienda. Las usadas siguen saliendo de Mercado Libre.
 
