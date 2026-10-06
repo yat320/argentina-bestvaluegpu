@@ -104,10 +104,10 @@ td.num{font-family:var(--mono);font-size:.88rem}
 <script>
 const $=s=>document.querySelector(s);
 const fmt=n=>'$'+Math.round(n).toLocaleString('es-AR');
-let gpus=[],precios={},busquedas={},cond='nueva',marca='',orden={k:'value',dir:-1};
+let gpus=[],precios={},fuentes={},cond='nueva',marca='',orden={k:'value',dir:-1};
 
 // Búsqueda por defecto: el listado de ML con el filtro de condición.
-// precios.json puede traer su propia búsqueda por condición en "busquedas".
+// Cada fuente de precios.json puede traer su propia búsqueda en "busqueda".
 const COND={nueva:'_ITEM*CONDITION_2230284_NoIndex_True',usada:'_ITEM*CONDITION_2230581_NoIndex_True'};
 function slug(s){return s.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
 
@@ -138,8 +138,9 @@ function pintar(){
       :`Todavía no hay precios de placas ${cond==='nueva'?'nuevas':'usadas'}.`}</td></tr>`;
     return}
   $('#filas').innerHTML=rs.map(r=>{
-    const url=busquedas[cond]
-      ?busquedas[cond].replace('{q}',encodeURIComponent(r.busqueda))
+    const bq=(fuentes[cond]||{}).busqueda;
+    const url=bq
+      ?bq.replace('{q}',encodeURIComponent(r.busqueda))
       :'https://listado.mercadolibre.com.ar/'+slug(r.busqueda)+COND[cond];
     const extra=r.barata&&r.barata.url
       ?`<span class="n">la más barata: <a href="${r.barata.url}" target="_blank" rel="noopener">${fmt(r.barata.precio)}</a></span>`:'';
@@ -171,16 +172,19 @@ document.querySelectorAll('th').forEach(th=>{
 
 Promise.all([fetch('data/gpus.json').then(r=>r.json()),fetch('data/precios.json').then(r=>r.json())])
   .then(([g,p])=>{
-    gpus=g;precios=p.precios||{};busquedas=p.busquedas||{};
+    gpus=g;precios=p.precios||{};fuentes=p.fuentes||{};
     const aprox=g.some(x=>x.tdmarkAprox);
     const avisos=[];
     if(p.ejemplo)avisos.push('<b>Precios de ejemplo.</b> Son inventados para armar la página.');
     if(aprox)avisos.push('<b>3DMark aproximado.</b> Los puntajes todavía no están verificados contra una fuente.');
     $('#aviso').innerHTML=avisos.join(' ');
     $('#aviso').hidden=!avisos.length;
-    const fecha=p.actualizado?` del ${p.actualizado.split('-').reverse().join('/')}`:'';
-    const fuente=p.fuenteUrl?` de <a href="${p.fuenteUrl}" target="_blank" rel="noopener">${p.fuenteNombre}</a>`:'';
-    $('#fecha').innerHTML=`Placas de video: puntos de 3DMark por cada peso · precios${fuente}${fecha}`;
+    const dia=f=>f.actualizado?` del ${f.actualizado.split('-').reverse().slice(0,2).join('/')}`:'';
+    const de=['nueva','usada'].filter(c=>fuentes[c]).map(c=>{
+      const f=fuentes[c];
+      return `${c==='nueva'?'nuevas':'usadas'} de <a href="${f.url}" target="_blank" rel="noopener">${f.nombre}</a>${dia(f)}`;
+    });
+    $('#fecha').innerHTML='Placas de video: puntos de 3DMark por cada peso'+(de.length?' · '+de.join(' · '):'');
     pintar();
   })
   .catch(()=>{$('#filas').innerHTML='<tr><td colspan="7" class="vacio">No se pudieron cargar los datos (data/gpus.json y data/precios.json).</td></tr>'});

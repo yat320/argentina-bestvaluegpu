@@ -5,16 +5,19 @@ Placas de video ordenadas por cuánto rinden por cada peso: puntos de 3DMark con
 Es una página estática (`index.html`) que lee dos archivos:
 
 - `data/gpus.json`: las placas. `id`, `nombre`, `marca`, `watt`, `vram`, `tdmark` (puntaje de 3DMark, la misma prueba para todas), `tdmarkAprox` (`true` mientras el puntaje no esté verificado; la página lo avisa) y `busqueda` (el nombre que se busca y con el que se reconocen los títulos).
-- `data/precios.json`: los precios, por `id` y condición:
+- `data/precios.json`: los precios, por `id` y condición, y de dónde salió cada condición:
 
 ```json
-{ "ejemplo": false, "actualizado": "2026-10-04",
+{ "ejemplo": false,
+  "fuentes": { "nueva": {"nombre": "HardGamers", "url": "https://www.hardgamers.com.ar/...",
+                         "busqueda": "https://www.hardgamers.com.ar/search?text={q}", "actualizado": "2026-10-06"},
+               "usada": {"nombre": "Mercado Libre", "url": "https://www.mercadolibre.com.ar", "actualizado": "2026-10-06"} },
   "precios": { "rtx-4060": { "nueva": {"precio": 520000, "publicaciones": 20,
-                                       "barata": {"precio": 489999, "url": "https://articulo.mercadolibre.com.ar/MLA-..."}},
+                                       "barata": {"precio": 489999, "url": "https://..."}},
                              "usada": {"precio": 400000, "publicaciones": 9} } } }
 ```
 
-`fuenteNombre` y `fuenteUrl` se muestran arriba de la tabla, y `busquedas` dice adónde lleva el link del precio en cada condición (`{q}` es el nombre de la placa); sin eso, va al listado de Mercado Libre. Con `"ejemplo": true` la página avisa que los precios no son reales.
+La página muestra cada fuente con su fecha arriba de la tabla. `busqueda` es adónde lleva el link del precio (`{q}` es el nombre de la placa); sin eso, va al listado de Mercado Libre. Con `"ejemplo": true` la página avisa que los precios no son reales.
 
 **Hoy:** las nuevas tienen precios reales de HardGamers, que se actualizan solos todos los días; las usadas todavía no tienen fuente; los puntajes de 3DMark son aproximados.
 
@@ -31,7 +34,7 @@ Abriendo `index.html` directo con doble clic no carga los datos: el navegador no
 Los precios se juntan en una PC con IP de casa: Mercado Libre bloquea las IPs de servidores y de la nube (incluido GitHub Actions).
 
 1. Juntar las publicaciones en un CSV, una fila por publicación: `id,condicion,precio,url` (condición `nueva` o `usada`, precio en pesos sin puntos, url opcional). Puede salir de un scraper o cargarse a mano.
-2. `python scripts/precios_desde_csv.py data/precios.csv` arma `data/precios.json`: por placa y condición, la mediana de las publicaciones después de sacar las que están a menos de la mitad o más del doble de la mediana, y la más barata que quedó con su link (`barata`), que la página muestra debajo del precio.
+2. `python scripts/precios_desde_csv.py data/precios.csv --fuente mercadolibre` (o `hardgamers`) actualiza `data/precios.json`: por placa y condición, la mediana de las publicaciones después de sacar las que están a menos de la mitad o más del doble de la mediana, y la más barata que quedó con su link (`barata`), que la página muestra debajo del precio. Solo reemplaza las condiciones que trae el CSV: las nuevas y las usadas se actualizan por separado sin pisarse.
 3. Commit y push.
 
 ### Desde HardGamers (placas nuevas)
