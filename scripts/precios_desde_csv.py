@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Arma data/precios.json desde un CSV de precios cargados a mano o por un scraper.
+"""Actualiza data/precios.json desde un CSV de precios cargados a mano o por un scraper.
 
 El CSV tiene una fila por publicación: id,condicion,precio[,url]
   - id: el de data/gpus.json (por ejemplo rtx-4060)
@@ -11,8 +11,12 @@ Por cada placa y condición guarda la mediana de lo que queda después de
 descartar los precios a menos de la mitad o más del doble de la mediana,
 cuántas publicaciones quedaron y la más barata de ellas que tenga url.
 
-    python scripts/precios_desde_csv.py data/precios.csv
+Solo reemplaza las condiciones que trae el CSV: las nuevas (HardGamers, en
+GitHub Actions) y las usadas (Mercado Libre, desde una PC) se actualizan
+por separado sin pisarse.
+
     python scripts/precios_desde_csv.py data/precios.csv --fuente hardgamers
+    python scripts/precios_desde_csv.py data/usadas.csv --fuente mercadolibre
 """
 import csv
 import json
@@ -23,14 +27,41 @@ from statistics import median
 
 DATA = Path(__file__).resolve().parent.parent / "data"
 
-# Lo que la página muestra como fuente y adónde lleva el link del precio.
+# Lo que la página muestra como fuente y adónde lleva el link del precio
+# ({q} es el nombre de la placa). Sin "busqueda", el link va al listado de ML.
 FUENTES = {
     "hardgamers": {
-        "fuenteNombre": "HardGamers",
-        "fuenteUrl": "https://www.hardgamers.com.ar/search?category=placas-de-video",
-        "busquedas": {"nueva": "https://www.hardgamers.com.ar/search?text={q}"},
+        "nombre": "HardGamers",
+        "url": "https://www.hardgamers.com.ar/search?category=placas-de-video",
+        "busqueda": "https://www.hardgamers.com.ar/search?text={q}",
+    },
+    "mercadolibre": {
+        "nombre": "Mercado Libre",
+        "url": "https://www.mercadolibre.com.ar",
     },
 }
+
+
+def anterior():
+    """El precios.json actual, con el formato viejo (una sola fuente) pasado al nuevo."""
+    ruta = DATA / "precios.json"
+    if not ruta.exists():
+        return {"precios": {}, "fuentes": {}}
+    datos = json.loads(ruta.read_text(encoding="utf-8"))
+    if datos.get("ejemplo"):
+        return {"precios": {}, "fuentes": {}}
+    if "fuentes" not in datos:
+        conds = {c for p in datos.get("precios", {}).values() for c in p}
+        datos["fuentes"] = {
+            c: {k: v for k, v in {
+                "nombre": datos.get("fuenteNombre"),
+                "url": datos.get("fuenteUrl"),
+                "busqueda": datos.get("busquedas", {}).get(c),
+                "actualizado": datos.get("actualizado"),
+            }.items() if v}
+            for c in conds
+        }
+    return datos
 
 
 def limpiar(pubs):
@@ -38,7 +69,7 @@ def limpiar(pubs):
     return [(p, u) for p, u in pubs if m / 2 <= p <= m * 2]
 
 
-def main(ruta_csv, fuente=None):
+def main(ruta_csv, fuente):
     ids = {g["id"] for g in json.loads((DATA / "gpus.json").read_text(encoding="utf-8"))}
     crudos = {}
     with open(ruta_csv, newline="", encoding="utf-8") as fh:
@@ -53,7 +84,14 @@ def main(ruta_csv, fuente=None):
             url = (fila.get("url") or "").strip()
             crudos.setdefault(gid, {}).setdefault(cond, []).append((float(fila["precio"]), url))
 
+    previo = anterior()
+    nuevas = {cond for conds in crudos.values() for cond in conds}
+    # Se borran las condiciones que trae el CSV y se dejan las otras.
     precios = {}
+    for gid, conds in previo["precios"].items():
+        quedan = {c: d for c, d in conds.items() if c not in nuevas}
+        if quedan:
+            precios[gid] = quedan
     for gid, conds in crudos.items():
         for cond, lista in conds.items():
             buenos = limpiar(lista)
@@ -67,22 +105,19 @@ def main(ruta_csv, fuente=None):
                 dato["barata"] = {"precio": round(p), "url": u}
             precios.setdefault(gid, {})[cond] = dato
 
-    salida = {
-        "ejemplo": False,
-        "actualizado": date.today().isoformat(),
-        **FUENTES.get(fuente, {"fuenteNombre": "Mercado Libre", "fuenteUrl": "https://www.mercadolibre.com.ar"}),
-        "precios": precios,
-    }
+    fuentes = {c: f for c, f in previo["fuentes"].items() if c not in nuevas}
+    for cond in nuevas:
+        fuentes[cond] = {**FUENTES[fuente], "actualizado": date.today().isoformat()}
+
+    salida = {"ejemplo": False, "fuentes": dict(sorted(fuentes.items())), "precios": precios}
     (DATA / "precios.json").write_text(json.dumps(salida, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"[ok] {sum(len(c) for c in precios.values())} precios en data/precios.json")
+    for cond in sorted(nuevas):
+        n = sum(1 for c in precios.values() if cond in c)
+        print(f"[ok] {n} placas {cond}s en data/precios.json")
 
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    fuente = None
-    if len(args) == 3 and args[1] == "--fuente" and args[2] in FUENTES:
-        fuente = args[2]
-        args = args[:1]
-    if len(args) != 1:
-        sys.exit("Uso: python scripts/precios_desde_csv.py data/precios.csv [--fuente hardgamers]")
-    main(args[0], fuente)
+    if len(args) != 3 or args[1] != "--fuente" or args[2] not in FUENTES:
+        sys.exit("Uso: python scripts/precios_desde_csv.py archivo.csv --fuente " + "|".join(FUENTES))
+    main(args[0], args[2])

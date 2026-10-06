@@ -1,10 +1,12 @@
 {
   "ejemplo": false,
-  "actualizado": "2026-10-05",
-  "fuenteNombre": "HardGamers",
-  "fuenteUrl": "https://www.hardgamers.com.ar/search?category=placas-de-video",
-  "busquedas": {
-    "nueva": "https://www.hardgamers.com.ar/search?text={q}"
+  "fuentes": {
+    "nueva": {
+      "nombre": "HardGamers",
+      "url": "https://www.hardgamers.com.ar/search?category=placas-de-video",
+      "busqueda": "https://www.hardgamers.com.ar/search?text={q}",
+      "actualizado": "2026-10-05"
+    }
   },
   "precios": {
     "rx-580": {

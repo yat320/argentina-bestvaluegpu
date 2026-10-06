@@ -9,7 +9,8 @@ Página estática que ordena placas de video por puntos de 3DMark por peso, con 
 ## De dónde salen los precios
 
 - **Nuevas: HardGamers.** `scripts/hardgamers.py --categoria` recorre la categoría de placas de video (5 s entre páginas, el Crawl-delay de su robots.txt) y lee los microdatos de schema.org de cada producto. Responde desde la nube, así que corre todos los días en GitHub Actions (`.github/workflows/precios.yml`).
-- **Usadas: sin fuente todavía.** La única es Mercado Libre, con los problemas de abajo.
+- **Usadas: Mercado Libre, desde una PC.** ML bloquea las IPs de servidores, así que esto no puede ir en GitHub Actions. El scraper de usadas escribe un CSV con el mismo formato que `hardgamers.py` (`id,condicion,precio,url`, con `condicion=usada`), usa `placa_de()` de `hardgamers.py` para el matching y después corre `precios_desde_csv.py usadas.csv --fuente mercadolibre`.
+- `precios_desde_csv.py` solo reemplaza las condiciones que trae el CSV, así las nuevas (Actions, todos los días) y las usadas (PC) no se pisan. El workflow sube un commit a `main` cada día: **hacer `git pull` antes de trabajar y antes de subir precios de usadas.**
 - El matching está en `placa_de()`: línea, número y variante tienen que coincidir; si el título dice la memoria ("8GB", "8 GB" u "8G") tiene que coincidir con `vram`; si no la dice y hay dos placas posibles (RTX 5060 Ti de 8 y 16 GB), se descarta. Las placas que el mercado ofrece y no están en `gpus.json` aparecen como `[sin placa]` en la salida de error: revisar esa lista de vez en cuando para sumar modelos.
 - En octubre de 2026, nuevas casi solo había RTX 50 y RX 9000; de RTX 40 y RX 6000 no había ninguna.
 
