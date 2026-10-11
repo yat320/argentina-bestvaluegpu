@@ -5,24 +5,14 @@
       "nombre": "HardGamers",
       "url": "https://www.hardgamers.com.ar/search?category=placas-de-video",
       "busqueda": "https://www.hardgamers.com.ar/search?text={q}",
-      "actualizado": "2026-10-10"
+      "actualizado": "2026-10-11"
     }
   },
   "precios": {
-    "rtx-5060": {
-      "nueva": {
-        "precio": 951262,
-        "publicaciones": 227,
-        "barata": {
-          "precio": 819000,
-          "url": "https://www.hardgamers.com.ar/product/wiztech:2rshn2"
-        }
-      }
-    },
     "rx-580": {
       "nueva": {
-        "precio": 312818,
-        "publicaciones": 6,
+        "precio": 294570,
+        "publicaciones": 7,
         "barata": {
           "precio": 244150,
           "url": "https://www.hardgamers.com.ar/product/compufanStore:4712960688438"
@@ -41,8 +31,8 @@
     },
     "rtx-3050-6gb": {
       "nueva": {
-        "precio": 529630,
-        "publicaciones": 114,
+        "precio": 533140,
+        "publicaciones": 115,
         "barata": {
           "precio": 443042,
           "url": "https://www.hardgamers.com.ar/product/hypergaming:q7hj94"
@@ -56,26 +46,6 @@
         "barata": {
           "precio": 467360,
           "url": "https://www.hardgamers.com.ar/product/fullh4rd:dvyc4j"
-        }
-      }
-    },
-    "rx-9070-xt": {
-      "nueva": {
-        "precio": 1786504,
-        "publicaciones": 78,
-        "barata": {
-          "precio": 1490000,
-          "url": "https://www.hardgamers.com.ar/product/noxie:gck96f"
-        }
-      }
-    },
-    "rtx-5070-ti": {
-      "nueva": {
-        "precio": 2517072,
-        "publicaciones": 136,
-        "barata": {
-          "precio": 2181460,
-          "url": "https://www.hardgamers.com.ar/product/silverHard:pc9o7j"
         }
       }
     },
@@ -99,10 +69,20 @@
         }
       }
     },
+    "rtx-5060": {
+      "nueva": {
+        "precio": 951947,
+        "publicaciones": 226,
+        "barata": {
+          "precio": 819000,
+          "url": "https://www.hardgamers.com.ar/product/wiztech:2rshn2"
+        }
+      }
+    },
     "arc-b580": {
       "nueva": {
-        "precio": 691280,
-        "publicaciones": 18,
+        "precio": 692494,
+        "publicaciones": 19,
         "barata": {
           "precio": 599999,
           "url": "https://www.hardgamers.com.ar/product/venex:ahs8yp"
@@ -141,8 +121,8 @@
     },
     "rtx-3060-12gb": {
       "nueva": {
-        "precio": 990094,
-        "publicaciones": 58,
+        "precio": 991640,
+        "publicaciones": 57,
         "barata": {
           "precio": 798579,
           "url": "https://www.hardgamers.com.ar/product/mexx:vb2d0l"
@@ -151,8 +131,8 @@
     },
     "rtx-5060-ti-8gb": {
       "nueva": {
-        "precio": 1066870,
-        "publicaciones": 354,
+        "precio": 1067052,
+        "publicaciones": 352,
         "barata": {
           "precio": 897999,
           "url": "https://www.hardgamers.com.ar/product/armyTech:1473975188"
@@ -199,10 +179,30 @@
         }
       }
     },
+    "rx-9070-xt": {
+      "nueva": {
+        "precio": 1789409,
+        "publicaciones": 77,
+        "barata": {
+          "precio": 1490000,
+          "url": "https://www.hardgamers.com.ar/product/noxie:gck96f"
+        }
+      }
+    },
+    "rtx-5070-ti": {
+      "nueva": {
+        "precio": 2515922,
+        "publicaciones": 137,
+        "barata": {
+          "precio": 2181460,
+          "url": "https://www.hardgamers.com.ar/product/silverHard:pc9o7j"
+        }
+      }
+    },
     "rtx-5070": {
       "nueva": {
-        "precio": 1763000,
-        "publicaciones": 237,
+        "precio": 1763740,
+        "publicaciones": 236,
         "barata": {
           "precio": 1524990,
           "url": "https://www.hardgamers.com.ar/product/venex:5m0td2"
@@ -211,11 +211,11 @@
     },
     "rtx-5080": {
       "nueva": {
-        "precio": 3641806,
-        "publicaciones": 58,
+        "precio": 3679312,
+        "publicaciones": 55,
         "barata": {
-          "precio": 2481344,
-          "url": "https://www.hardgamers.com.ar/product/silverHard:igy14p"
+          "precio": 2999990,
+          "url": "https://www.hardgamers.com.ar/product/gezatek:tfo49p"
         }
       }
     },
