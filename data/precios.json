@@ -5,14 +5,14 @@
       "nombre": "HardGamers",
       "url": "https://www.hardgamers.com.ar/search?category=placas-de-video",
       "busqueda": "https://www.hardgamers.com.ar/search?text={q}",
-      "actualizado": "2026-11-18"
+      "actualizado": "2026-11-19"
     }
   },
   "precios": {
     "rx-580": {
       "nueva": {
-        "precio": 296219,
-        "publicaciones": 6,
+        "precio": 319000,
+        "publicaciones": 7,
         "barata": {
           "precio": 252718,
           "url": "https://www.hardgamers.com.ar/product/acuarioInsumos:e1p61u"
@@ -31,18 +31,18 @@
     },
     "rtx-3050-6gb": {
       "nueva": {
-        "precio": 534575,
-        "publicaciones": 120,
+        "precio": 536366,
+        "publicaciones": 115,
         "barata": {
-          "precio": 461547,
-          "url": "https://www.hardgamers.com.ar/product/armyTech:740965260"
+          "precio": 469539,
+          "url": "https://www.hardgamers.com.ar/product/mexx:5wsios"
         }
       }
     },
     "rtx-2060": {
       "nueva": {
         "precio": 483560,
-        "publicaciones": 3,
+        "publicaciones": 2,
         "barata": {
           "precio": 483560,
           "url": "https://www.hardgamers.com.ar/product/fullh4rd:dvyc4j"
@@ -51,38 +51,28 @@
     },
     "arc-b570": {
       "nueva": {
-        "precio": 580940,
-        "publicaciones": 8,
+        "precio": 591890,
+        "publicaciones": 7,
         "barata": {
-          "precio": 556822,
-          "url": "https://www.hardgamers.com.ar/product/silverHard:d8n324"
+          "precio": 555739,
+          "url": "https://www.hardgamers.com.ar/product/scpHardStore:VGA990"
         }
       }
     },
     "rx-7600": {
       "nueva": {
-        "precio": 820744,
-        "publicaciones": 56,
+        "precio": 833770,
+        "publicaciones": 51,
         "barata": {
           "precio": 596492,
           "url": "https://www.hardgamers.com.ar/product/acuarioInsumos:7x0gnr"
         }
       }
     },
-    "arc-b580": {
-      "nueva": {
-        "precio": 724519,
-        "publicaciones": 9,
-        "barata": {
-          "precio": 639990,
-          "url": "https://www.hardgamers.com.ar/product/venex:ahs8yp"
-        }
-      }
-    },
     "rtx-5050": {
       "nueva": {
-        "precio": 849361,
-        "publicaciones": 102,
+        "precio": 850594,
+        "publicaciones": 96,
         "barata": {
           "precio": 659000,
           "url": "https://www.hardgamers.com.ar/product/wiztech:pdesd5"
@@ -91,28 +81,38 @@
     },
     "rtx-3050": {
       "nueva": {
-        "precio": 714314,
+        "precio": 716570,
         "publicaciones": 16,
         "barata": {
-          "precio": 669764,
+          "precio": 673961,
           "url": "https://www.hardgamers.com.ar/product/maximus:item-20999"
         }
       }
     },
-    "rtx-5060-ti-8gb": {
+    "rtx-5070-ti": {
       "nueva": {
-        "precio": 1101600,
-        "publicaciones": 333,
+        "precio": 2600358,
+        "publicaciones": 102,
         "barata": {
-          "precio": 864166,
-          "url": "https://www.hardgamers.com.ar/product/armyTech:77065444"
+          "precio": 2269000,
+          "url": "https://www.hardgamers.com.ar/product/wiztech:moev9n"
+        }
+      }
+    },
+    "arc-b580": {
+      "nueva": {
+        "precio": 724519,
+        "publicaciones": 9,
+        "barata": {
+          "precio": 692539,
+          "url": "https://www.hardgamers.com.ar/product/scpHardStore:VGA991"
         }
       }
     },
     "rtx-5060": {
       "nueva": {
         "precio": 1000935,
-        "publicaciones": 217,
+        "publicaciones": 207,
         "barata": {
           "precio": 799999,
           "url": "https://www.hardgamers.com.ar/product/logg:1a1hhf"
@@ -121,8 +121,8 @@
     },
     "rtx-3060-12gb": {
       "nueva": {
-        "precio": 988500,
-        "publicaciones": 87,
+        "precio": 1001087,
+        "publicaciones": 84,
         "barata": {
           "precio": 804999,
           "url": "https://www.hardgamers.com.ar/product/mexx:5fz4w8"
@@ -131,11 +131,11 @@
     },
     "rx-9060-xt-8gb": {
       "nueva": {
-        "precio": 921399,
-        "publicaciones": 40,
+        "precio": 921549,
+        "publicaciones": 38,
         "barata": {
-          "precio": 823010,
-          "url": "https://www.hardgamers.com.ar/product/enjoyComputer:wc-12552"
+          "precio": 822820,
+          "url": "https://www.hardgamers.com.ar/product/scpHardStore:VGA608"
         }
       }
     },
@@ -149,33 +149,23 @@
         }
       }
     },
-    "rx-9070-xt": {
+    "rtx-5060-ti-8gb": {
       "nueva": {
-        "precio": 1831727,
-        "publicaciones": 152,
+        "precio": 1105896,
+        "publicaciones": 320,
         "barata": {
-          "precio": 1399178,
-          "url": "https://www.hardgamers.com.ar/product/crosshairGaming:qakm4n"
-        }
-      }
-    },
-    "rtx-5070-ti": {
-      "nueva": {
-        "precio": 2596958,
-        "publicaciones": 112,
-        "barata": {
-          "precio": 2269000,
-          "url": "https://www.hardgamers.com.ar/product/wiztech:moev9n"
+          "precio": 896572,
+          "url": "https://www.hardgamers.com.ar/product/armyTech:77065444"
         }
       }
     },
     "rx-9060-xt-16gb": {
       "nueva": {
-        "precio": 1145076,
-        "publicaciones": 14,
+        "precio": 1150000,
+        "publicaciones": 13,
         "barata": {
-          "precio": 959999,
-          "url": "https://www.hardgamers.com.ar/product/venex:jsoqqi"
+          "precio": 988000,
+          "url": "https://www.hardgamers.com.ar/product/spaceVideojuegos:qyrggh"
         }
       }
     },
@@ -184,8 +174,8 @@
         "precio": 1267520,
         "publicaciones": 18,
         "barata": {
-          "precio": 1154521,
-          "url": "https://www.hardgamers.com.ar/product/acuarioInsumos:e8tdel"
+          "precio": 1109000,
+          "url": "https://www.hardgamers.com.ar/product/wiztech:vvliuj"
         }
       }
     },
@@ -201,28 +191,38 @@
     },
     "rx-9070": {
       "nueva": {
-        "precio": 1550760,
-        "publicaciones": 42,
+        "precio": 1544000,
+        "publicaciones": 51,
         "barata": {
           "precio": 1300000,
           "url": "https://www.hardgamers.com.ar/product/portalTech:4wah82"
         }
       }
     },
+    "rx-9070-xt": {
+      "nueva": {
+        "precio": 1854771,
+        "publicaciones": 137,
+        "barata": {
+          "precio": 1450400,
+          "url": "https://www.hardgamers.com.ar/product/gamerfactory:jukzdb"
+        }
+      }
+    },
     "rtx-5060-ti-16gb": {
       "nueva": {
-        "precio": 1665026,
-        "publicaciones": 88,
+        "precio": 1665240,
+        "publicaciones": 80,
         "barata": {
-          "precio": 1514990,
-          "url": "https://www.hardgamers.com.ar/product/venex:u73pt0"
+          "precio": 1537880,
+          "url": "https://www.hardgamers.com.ar/product/crosshairGaming:jc99i7"
         }
       }
     },
     "rtx-5070": {
       "nueva": {
-        "precio": 1849990,
-        "publicaciones": 195,
+        "precio": 1857600,
+        "publicaciones": 177,
         "barata": {
           "precio": 1590075,
           "url": "https://www.hardgamers.com.ar/product/bracatech:3gizxc"
@@ -231,17 +231,17 @@
     },
     "rtx-5080": {
       "nueva": {
-        "precio": 3768000,
-        "publicaciones": 34,
+        "precio": 3898320,
+        "publicaciones": 37,
         "barata": {
-          "precio": 3099999,
-          "url": "https://www.hardgamers.com.ar/product/venex:p6a95d"
+          "precio": 3258994,
+          "url": "https://www.hardgamers.com.ar/product/acuarioInsumos:qg17yt"
         }
       }
     },
     "rtx-5090": {
       "nueva": {
-        "precio": 19999999,
+        "precio": 22800421,
         "publicaciones": 3,
         "barata": {
           "precio": 15444000,
