@@ -5,7 +5,7 @@
       "nombre": "HardGamers",
       "url": "https://www.hardgamers.com.ar/search?category=placas-de-video",
       "busqueda": "https://www.hardgamers.com.ar/search?text={q}",
-      "actualizado": "2026-11-22"
+      "actualizado": "2026-11-23"
     }
   },
   "precios": {
@@ -49,6 +49,16 @@
         }
       }
     },
+    "rtx-5070-ti": {
+      "nueva": {
+        "precio": 2629066,
+        "publicaciones": 104,
+        "barata": {
+          "precio": 2295979,
+          "url": "https://www.hardgamers.com.ar/product/crosshairGaming:8mdpf6"
+        }
+      }
+    },
     "arc-b570": {
       "nueva": {
         "precio": 603200,
@@ -61,8 +71,8 @@
     },
     "rtx-3050": {
       "nueva": {
-        "precio": 724633,
-        "publicaciones": 20,
+        "precio": 721484,
+        "publicaciones": 21,
         "barata": {
           "precio": 572617,
           "url": "https://www.hardgamers.com.ar/product/crosshairGaming:kjtpf5"
@@ -74,8 +84,8 @@
         "precio": 864880,
         "publicaciones": 53,
         "barata": {
-          "precio": 624994,
-          "url": "https://www.hardgamers.com.ar/product/acuarioInsumos:7x0gnr"
+          "precio": 630000,
+          "url": "https://www.hardgamers.com.ar/product/hydraxtreme:dirqan"
         }
       }
     },
@@ -91,11 +101,21 @@
     },
     "rtx-5050": {
       "nueva": {
-        "precio": 860465,
-        "publicaciones": 97,
+        "precio": 861962,
+        "publicaciones": 99,
         "barata": {
           "precio": 709000,
           "url": "https://www.hardgamers.com.ar/product/wiztech:pdesd5"
+        }
+      }
+    },
+    "rtx-5060": {
+      "nueva": {
+        "precio": 1014303,
+        "publicaciones": 215,
+        "barata": {
+          "precio": 799999,
+          "url": "https://www.hardgamers.com.ar/product/logg:1a1hhf"
         }
       }
     },
@@ -129,20 +149,10 @@
         }
       }
     },
-    "rtx-5060": {
-      "nueva": {
-        "precio": 1014303,
-        "publicaciones": 211,
-        "barata": {
-          "precio": 868530,
-          "url": "https://www.hardgamers.com.ar/product/armyTech:987640516"
-        }
-      }
-    },
     "rtx-5060-ti-8gb": {
       "nueva": {
-        "precio": 1117450,
-        "publicaciones": 319,
+        "precio": 1119025,
+        "publicaciones": 320,
         "barata": {
           "precio": 907921,
           "url": "https://www.hardgamers.com.ar/product/armyTech:77065444"
@@ -171,8 +181,8 @@
     },
     "rx-9070-gre": {
       "nueva": {
-        "precio": 1274093,
-        "publicaciones": 20,
+        "precio": 1269715,
+        "publicaciones": 21,
         "barata": {
           "precio": 1149000,
           "url": "https://www.hardgamers.com.ar/product/wiztech:vvliuj"
@@ -199,20 +209,10 @@
         }
       }
     },
-    "rtx-5070-ti": {
-      "nueva": {
-        "precio": 2630000,
-        "publicaciones": 101,
-        "barata": {
-          "precio": 2295979,
-          "url": "https://www.hardgamers.com.ar/product/crosshairGaming:8mdpf6"
-        }
-      }
-    },
     "rx-9070-xt": {
       "nueva": {
-        "precio": 1871916,
-        "publicaciones": 120,
+        "precio": 1872269,
+        "publicaciones": 119,
         "barata": {
           "precio": 1483434,
           "url": "https://www.hardgamers.com.ar/product/scpHardStore:VGA623"
@@ -221,8 +221,8 @@
     },
     "rtx-5060-ti-16gb": {
       "nueva": {
-        "precio": 1681412,
-        "publicaciones": 86,
+        "precio": 1683574,
+        "publicaciones": 89,
         "barata": {
           "precio": 1537880,
           "url": "https://www.hardgamers.com.ar/product/crosshairGaming:jc99i7"
@@ -231,8 +231,8 @@
     },
     "rtx-5070": {
       "nueva": {
-        "precio": 1867944,
-        "publicaciones": 180,
+        "precio": 1868000,
+        "publicaciones": 181,
         "barata": {
           "precio": 1599999,
           "url": "https://www.hardgamers.com.ar/product/logg:lhyx99"
@@ -241,11 +241,11 @@
     },
     "rtx-5080": {
       "nueva": {
-        "precio": 3999999,
-        "publicaciones": 47,
+        "precio": 4043950,
+        "publicaciones": 46,
         "barata": {
-          "precio": 3289739,
-          "url": "https://www.hardgamers.com.ar/product/acuarioInsumos:qg17yt"
+          "precio": 3405900,
+          "url": "https://www.hardgamers.com.ar/product/hypergaming:yisqxn"
         }
       }
     },
